@@ -1,6 +1,6 @@
 # Ohjelmistotekniikka Harjoitustyö
 
-##Huom.!
+## Huom.!
 Tein virheen ja jouduin poistamaan koko etärepositorioni. Kaikki tiedostot täällä ovat kuitenkin samat kuin alkuperäisessä, ja ainoa ero on, että committeja on nyt vähemmän. Jos sinun, kurssinvetäjän, täytyy saada tietää, miksi, niin ota yhteyttä helja.raisanen @ helsinki.fi
 
 ## Seating Placement Generator
