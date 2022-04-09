@@ -1,0 +1,33 @@
+Initial plan for how the algorithm work??
+
+1. the tables are each a list of tuples, where each tuple signifies two opposite seats. In seating a person's pals, the places which are next to and opposite of the person's seat should have the highest weight (be the most desirable options)
+
+[(O,O)  <- a table       ... or...  a table ->  [O,  [O,
+ (O,O)                                           O,   O,
+ (O,O)                                           O,   O,
+  ...                                            O,   O,
+ (O,O)]                                          O]   O]
+
+Alternatively, each table could be divided into two lists, which might be easier. We'll see.
+
+2. The input csv file will be read into two lists. An index denotes the same person on each list, one of them containing the name (split into two at the whitespace) and the other the seating wishes. They might be ordered by wish length: placing the biggest friend groups on the tables first guarantees that all friends fit into the same cluster. I don't know how to sort two lists while preserving the same-index idea, though. Maybe this will be one list of tuples.
+
+3. The placement algorithm. Placing should be begun with one person. Let's say the first of the sorted list, the person with the longest string of wishes, is placed first on a seat. The placement doesn't matter, as long as it's not a corner. Then: every other name first in full, then as just the first name, is searched for in the wish string. If there's a hit, the name is placed next to the seated person and removed from the list. 
+
+This should give an ok result. I, however, would like to obtain a perfect result. Factors not taken into consideration:
+ - by common sense people with only one placement wish should be guaranteed to have their wish fulfilled, in my opinion.
+ - by psychological heuristics, people tend to list first the name of the person they most desire for table company. The first name should be prioritized, as if it was the only person wished.
+
+To help implement these principles, maybe the wish string should also be split into names. This is probably impossible, since there is no standard form in which they are given: it can't be known whether people write full names or just the first names there. A person could scan through the csv file before running this program and change the names into a firstname-surname form.
+
+But how the placemet work?
+1. place name x (randomly) on a table. initiate "friend mode" or whatever.
+2. place the name of a friend on an index that is the nearest, empty index to x's index. (Maybe return index and increment it & add to it until you find a free place? But this shouldn't go on for long: a seat five seats away is irrelevant to the wish, even if it's the nearest seat)
+3. continue until wish string exhausted, return to regular mode
+4. move onto next name. if the name has placement wishes, pick a location far enough away from the already placed people, in case their friend groups will grow later.
+5. if there are no wishes, move on, until there are no names with wishes anymore.
+
+And the people with no wishes are placed the last in essentially random free positions. It doesn't matter.
+
+This will not result in a placement as good as one made by hand, but if this program will ever be usable, it will save hours of work of the table party team each month.
+

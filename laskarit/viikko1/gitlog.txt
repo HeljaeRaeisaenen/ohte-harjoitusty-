@@ -1,0 +1,54 @@
+/ EN TEHNYT LASKARITEHTÄVIÄ SANASTA SANAAN, MUTTA HARJOITTELIN NIIDEN AVULLA GITIN KÄYTTÖÄ JA KOKEILIN MENETELMIÄ /
+
+[main b8d960c] laskari
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ rename testi.txt => testi2.txt (100%)
+raisaneh@lx1-fuxi184:~/Documents/ohte/ohte_harjtyo$ git log --stat | cat
+commit b8d960c5d483e415a995b8806d3b777441e4298b
+Author: HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com>
+Date:   Wed Mar 16 22:41:20 2022 +0200
+
+    laskari
+
+ testi.txt => testi2.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit a938863bcda565a6148e54ca04c6cd92f54ce945
+Author: HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com>
+Date:   Wed Mar 16 22:15:53 2022 +0200
+
+    odt pois
+
+ dokumentaatio/.~lock.vaatimusm.odt#  |   1 -
+ dokumentaatio/vaatimusm.odt          | Bin 15685 -> 0 bytes
+ dokumentaatio/vaatimusmaarittely.txt |  21 +++++++++++++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
+
+commit b2cb672103fc58659c0e53fa3cafa6099989449a
+Author: HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com>
+Date:   Wed Mar 16 20:27:16 2022 +0200
+
+    second
+
+ dokumentaatio/.~lock.vaatimusm.odt# |   1 +
+ dokumentaatio/vaatimusm.odt         | Bin 0 -> 15685 bytes
+ 2 files changed, 1 insertion(+)
+
+commit 50654dde0e1234691e633b4c3fe2c3b61bf883da
+Author: HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com>
+Date:   Wed Mar 16 20:20:12 2022 +0200
+
+    Create README.md
+
+ README.md | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 072a3933c71dffb3d788fde7f0fdd5fd9cf5a50f
+Author: HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com>
+Date:   Wed Mar 16 19:30:57 2022 +0200
+
+    initial commit
+
+ testi.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
