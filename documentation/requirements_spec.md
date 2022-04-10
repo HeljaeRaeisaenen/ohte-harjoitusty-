@@ -12,7 +12,7 @@ The application does not have a need for different user groups or for the abilit
 
 ![UI](https://user-images.githubusercontent.com/94612974/160600527-6d642e05-783a-45b2-8eb7-40e4f125eefd.png)
 
-The image reads "Placement Generator", "input a csv file", "number of tables", and "start". This should be the view the user sees when starting the application. The user can write text into the fields. How the file is inputted is still undecided. Clicking the start-button will initiate the placement. The user should be able to control the application with a mouse and a keyboard: clicking on buttons and writing text.
+The image reads "Placement Generator", "input a csv file", "number of tables", and "start". This should be the view the user sees when starting the application. Update: The user first sees a login screen, after which a screen similar to this is shown. _Done._ The user can write text into the fields. How the file is inputted is still undecided. Clicking the start-button will initiate the placement. The user should be able to control the application with a mouse and a keyboard: clicking on buttons and writing text.
 
 ## Functionality
 
