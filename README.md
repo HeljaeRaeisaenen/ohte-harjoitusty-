@@ -13,3 +13,5 @@ The application creates seating arrangements for parties.
 [Work hour log](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/workhourlog.md)
 
 [Changelog](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/changelog.md)
+
+[Architecture](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/architecture.md)
