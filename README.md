@@ -10,8 +10,8 @@ The application creates seating arrangements for parties.
 
 [Requirements specification](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/requirements_spec.md)
 
+[Architecture](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/architecture.md)
+
 [Work hour log](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/workhourlog.md)
 
 [Changelog](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/changelog.md)
-
-[Architecture](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/architecture.md)
