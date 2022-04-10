@@ -6,4 +6,5 @@
 - created unit tests for the aforementioned
 
 ### Week 4
-- began work on the user interface, created index and class login
+- began work on the user interface, created an index file and new classes
+- user interface is kind of functional
