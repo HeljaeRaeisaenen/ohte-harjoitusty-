@@ -7,3 +7,12 @@
 3 hours of working on the actual seating-making (programming)
 
 3 hours of unittesting and correcting bugs
+
+**Total of 9 hours**
+
+## Week 4
+3 hours of trying to use tkinter and cleaning up code
+
+4 hours of working on the user interface and cleaning code
+
+**Total of **

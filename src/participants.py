@@ -3,6 +3,7 @@ and info relating to them'''
 
 from readwrite import fileread
 
+
 class Participants:
     '''a Participants-object contains four lists:
     - full names of the participants
@@ -17,12 +18,12 @@ class Participants:
         self.firstnames = []
         self.wishes = []
         if filepath:
-            self.read_the_file(filepath)
+            self.initialize(filepath)
         else:
-            pass  # todo raise something
+            pass  # todo
         self.placed = [False] * len(self.names)
 
-    def read_the_file(self, filename: str):
+    def initialize(self, filename: str):
         '''putting the read file contents in the Participants object'''
         output = fileread(filename)
         for i in output:

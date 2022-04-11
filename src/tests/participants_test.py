@@ -5,7 +5,7 @@ from participants import Participants
 class TestParticipants(unittest.TestCase):
     def setUp(self):
         self.f = Participants(
-            "/home/raisaneh/k/ohte/ohte_harjtyo/src/data/unittesting.csv")
+            "/home/raisaneh/k/ohte/ohte_harjo/src/data/unittesting.csv")
 
     def test_empty_setup_ok(self):
         self.f = Participants()
