@@ -15,4 +15,5 @@
 
 4 hours of working on the user interface and cleaning code
 
-**Total of **
+3 hours of work on the interface and on the program logic
+**Total of 10 hours**
