@@ -1,7 +1,5 @@
 '''functions for reading and writing files'''
 
-#import os
-
 
 def fileread(filepath: str):
     '''Read a file into a list
@@ -16,16 +14,17 @@ def fileread(filepath: str):
             cleanline = line.split(",", maxsplit=1)
             cleanline[1] = cleanline[1].replace('"', "")
             cleanline[1] = cleanline[1].split(",")
-            if cleanline[1][0] != "":
-                # this huge spectacle removes the whitespaces that some names in the wished
-                # company have in front of them, due to punctuation.
-                # idk if this could've been done more efficiently
-                new = []
-                for member in cleanline[1]:
-                    if member[0] == " ":
-                        new.append(member[1:])  # ??
-                    else:
-                        new.append(member)
+        # this huge spectacle removes the whitespaces that some names in the wished
+        # company have in front of them, due to punctuation.
+        # idk if this could've been done more efficiently
+            new = []
+            for member in cleanline[1]:
+                if member == "":
+                    break
+                if member[0] == " ":
+                    new.append(member[1:])
+                else:
+                    new.append(member)
                 cleanline.pop(1)
                 cleanline.append(new)
             output.append(cleanline)
@@ -45,8 +44,7 @@ def filewrite(filecontents: list, filepath=None):
         filecontents: a list containing lines to be written
         filepath: the desired path and filename
     '''
-    #dirname = os.path.dirname(__file__)
-    savepath = filepath  # os.path.join(dirname, "data", "testsave.csv")
+    savepath = filepath
 
     with open(savepath, "w", encoding="UTF-8") as file:
         for line in filecontents:

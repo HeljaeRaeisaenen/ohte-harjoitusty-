@@ -10,6 +10,7 @@ class Begin:
 
     def __init__(self, root, placement_is_finished):
         self._root = root
+        self._current_view = None
         self._frame = None
         self._tables_n = None
         self._filepath = None
@@ -26,9 +27,11 @@ class Begin:
 
     def destroy(self):
         '''Destroy the view'''
-        self._frame.destroy()
+        if self._current_view:
+            self._frame.destroy()
 
     def _init_view(self):
+        self.destroy()
         self._frame = ttk.Frame(master=self._root)
         label = ttk.Label(master=self._frame, text="Valitse tiedosto (csv)")
         openbutton = ttk.Button(
@@ -62,8 +65,34 @@ class Begin:
 
         self.pack()
 
+    def _tables_n_verification_view(self):
+        self.destroy()
+
+        self._frame = ttk.Frame(master=self._root)
+        label = ttk.Label(master=self._frame, text="Oletko varma?")
+        label2 = ttk.Label(master=self._frame, text="{self._tables_n} pöytää?")
+        button_yes = ttk.Button(
+            master=self._frame,
+            text="Kyllä",
+            command=self._init_view)
+        button_no = ttk.Button(
+            master=self._frame,
+            text="Ei",
+            command=self._handle_tables_button_press)
+
+        label.grid(row=0, column=0, columnspan=3,
+                   sticky=constants.EW, padx=200, pady=10)
+        label2.grid(row=1, column=0, padx=200, pady=10)
+        button_yes.grid(row=2, column=0, padx=200, pady=10)
+        button_no.grid(row=3, column=0, padx=200, pady=10)
+        self.pack()
+
     def _handle_tables_button_press(self):
         self._tables_n = askinteger("Input", "Input an Integer")
+        if self._tables_n > 5:
+            self._tables_n_verification_view()
+        self._init_view()
+            
 
     def _handle_open_button_press(self):
         self._filepath = filedialog.askopenfilename(

@@ -1,5 +1,7 @@
+'''Glues everything together?'''
 from placement import Placement
 from readwrite import filewrite
+
 
 def main():
     '''for testing purposes'''
