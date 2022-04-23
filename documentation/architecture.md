@@ -15,10 +15,10 @@ classDiagram
     Participant: tuple seat_coordinates
     
   class ParticipantsRepo
-    Participants: dict participiants
-    Participants: list has_friendgroup
-    Participants: list placed_fin
-    Participants: initialize()
+    ParticipantsRepo: dict participiants
+    ParticipantsRepo: list has_friendgroup
+    ParticipantsRepo: list placed_fin
+    ParticipantsRepo: initialize()
   
   class Placement
     Placement: object ParticipantsRepo
@@ -94,9 +94,9 @@ sequenceDiagram
   L-->>P: return finished placement
   deactivate L
   deactivate Pa
-  L-->>U: "here's your placemnt"
-  U->>L: "save it here"
-  L-->>U: "ok"
+  P-->>U: "here's your placemnt"
+  U->>P: "save it here"
+  P-->>U: "ok"
 ```
   
   Here's what happens next.
