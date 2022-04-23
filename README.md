@@ -12,3 +12,36 @@ The application creates seating arrangements for parties. The seating is influen
 [Work hour log](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/workhourlog.md)
 
 [Changelog](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/changelog.md)
+
+
+## Release
+
+## Installing and terminal commands
+The program can be installed from the previous section titled Release. 
+
+To have it work properly, you must have poetry installed:
+
+`poetry install`
+
+To run the program, type:
+
+`poetry run invoke start`
+
+in the directory where the program is.
+
+### Commands
+To run unit test for the program:
+
+`poetry run invoke test`
+
+To see a summary of save the results of the tests in an html file:
+
+`poetry run invoke coverage-report`
+
+Or to view the results instantly in your browser:
+
+`poetry run invoke coverage-html`
+
+To check the code with pylint:
+
+`poetry run invoke lint`
