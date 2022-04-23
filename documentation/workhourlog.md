@@ -29,3 +29,5 @@
 6 hours of working on the UI and correcting bugs, and adding error handling
 
 3 hours of working on login functionality and making a database
+
+4 hours of trying to use tkinter and giving the code a facelift
