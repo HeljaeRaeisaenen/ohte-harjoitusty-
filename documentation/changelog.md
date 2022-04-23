@@ -12,6 +12,7 @@
 ### Week 5
 - created better repository structure (maybe?) for class Participant, created class Participant
 - new unit tests
-- changed things about class Placement, and made progress with it
+- changed things about class Placement, and made it work better
 - added new methods to class Placement
 - created a database, made it possible to log in and out of the program
+- added some error safety measures
