@@ -22,10 +22,10 @@ class Placement:
         self.total_wishes = 0
         self.wishes_placed = 0
         self._check_everything_ok()
-        self._create_tables()
-        # self._ensure_tables()
         self._count_wishes()
+        self._create_tables()
         self.create_placement()
+
 
     def _check_everything_ok(self):
         if self.tables_n > len(self.repo.get_participants()):
@@ -37,8 +37,6 @@ class Placement:
 
         for participant in self.repo.participants.values():
             self.total_wishes += len(participant.wishes)
-
-# should there only be one layer of sublists to fin placement? i= 0 and 1 are table 1, etc
 
     def _create_tables(self):
         '''This causes fin_placement to have the correct number of seats and tables.
@@ -60,24 +58,16 @@ class Placement:
         for row in range(difference):
             self.fin_placement[row].append(None)
 
-#    def _ensure_tables(self):
-#        '''Make sure there are enough seats in the tables. This is ugly and complicated.
-#        Count the seats in fin_placement. If it's less than the number of participants, add
-#        the difference to the last two rows (the last table).'''
-#        count = 0
-#        #for table in self.fin_placement:
-#        for row in self.fin_placement:
-#            count += len(row)
-#
-#        if count < len(self.repo.get_participants()):
-#            add = len(self.repo.get_participants()) - count
-#            odd = False
-#            if add % 2 == 1:
-#                odd = True
-#            self.fin_placement[-2] += [None] * (add // 2)
-#            if odd:
-#                add += 1
-#            self.fin_placement[-1] += [None] * (add // 2)
+    def create_placement(self):
+        '''The big method that glues it all together'''
+        has_wishes = self.repo.return_has_wishes()
+        for person in has_wishes:
+            self.create_friendgroup(person)
+        self._combine_friendgroups()
+        self._do_fin_placement()
+        self._ensure_everyone_placed()
+
+###################################################################################################
 
     def create_friendgroup(self, name):
         '''This makes the initial building blocks of the placement: clusters of friends.
@@ -114,6 +104,24 @@ class Placement:
         if len(cluster) > 0:
             name_obj.place()
             self._cluster_into_neighbors(name, cluster)
+
+    def _place_friend_rows(self, friend_rows):
+        table_row = self.tables_n * 2
+
+        while len(friend_rows) > 0:
+            while table_row > 0:
+                table_row -= 1
+                self._place_friend_row(table_row, friend_rows.pop(0))
+                self._placement_place_opposite(table_row)
+                if table_row % 2 == 0:
+                    self._placement_place_opposite(table_row+1)
+                else:
+                    self._placement_place_opposite(table_row-1)
+                if len(friend_rows) == 0:
+                    break
+            table_row = self.tables_n * 2
+
+###################################################################################################
 
     def _add_friend_ok(self, name: str):
         '''Check if it's possible to add a friend to a cluster.
@@ -171,12 +179,23 @@ class Placement:
                         participants[wish])
                     participants[wish].place()
 
-        # for person in self.repo.has_friendgroup:
-        #    print(person, ":")
-        #    print(self.repo.participants[person].on_the_left)
-        #    print(self.repo.participants[person].on_the_right)
-        #    print(self.repo.participants[person].opposite, "\n")
 
+    def _friend_row(self, name):
+        '''Make a list from the seating info in the Particpant objects. The list is like a
+        row in the finished seating.
+            Args: the name of the leftmost people in the row
+            Returns: the row (a list)'''
+        output = []
+        while True:
+            if not name:
+                break
+            output.append(name)
+            name = self.repo.participants[name].on_the_right()
+
+        return output
+
+
+###############################################################################################
     def _do_fin_placement(self):
         '''Start putting people in friendgroups in the fin_placement.'''
 
@@ -202,49 +221,7 @@ class Placement:
         for person in self.repo.return_not_placed_fin():
             self._place_random(person)
 
-    def _place_friend_rows(self, friend_rows):
-        table_row = self.tables_n * 2
 
-        while len(friend_rows) > 0:
-            while table_row > 0:
-                table_row -= 1
-                self._place_friend_row(table_row, friend_rows.pop(0))
-                self._placement_place_opposite(table_row)
-                if table_row % 2 == 0:
-                    self._placement_place_opposite(table_row+1)
-                else:
-                    self._placement_place_opposite(table_row-1)
-                if len(friend_rows) == 0:
-                    break
-            table_row = self.tables_n * 2
-
-    def _place_missing_friends(self):
-        particpants = self.repo.get_participants()
-        for r_ind, row in enumerate(self.fin_placement):
-            for p_ind, place in enumerate(row):
-                if place:
-                    friend = particpants[place].on_the_left()
-                    if friend and not self.repo.check_if_placed_fin(friend):
-                        self._place_fin(friend, (r_ind, p_ind-1))
-                        self.wishes_placed += 1
-                    friend = particpants[place].on_the_right()
-                    if friend and not self.repo.check_if_placed_fin(friend):
-                        self._place_fin(friend, (r_ind, p_ind+1))
-                        self.wishes_placed += 1
-
-    def _friend_row(self, name):
-        '''Make a list from the seating info in the Particpant objects. The list is like a
-        row in the finished seating.
-            Args: the name of the leftmost people in the row
-            Returns: the row (a list)'''
-        output = []
-        while True:
-            if not name:
-                break
-            output.append(name)
-            name = self.repo.participants[name].on_the_right()
-
-        return output
 
     def _place_friend_row(self, row, friends: list):
         '''Place a friend row in a table in fin_placement.
@@ -263,18 +240,6 @@ class Placement:
                     self._place_fin(person, (row, index))
                 self.wishes_placed += (len(friends) * 2) - 2
                 break
-
-    def _place_random(self, name):
-        for row in self.fin_placement:
-            for place in row:
-                if not place:
-                    row_i = self.fin_placement.index(row)
-                    place_i = self.fin_placement[row_i].index(
-                        place)
-                    self._place_fin(name, (row_i, place_i))
-                    return
-
-###############################################################################################
 
     def _placement_place_opposite(self, row):
         success = False
@@ -326,18 +291,29 @@ class Placement:
         if success:
             self.wishes_placed += 1
 
-###############################################################################################
-    def _ensure_everyone_placed(self):
-        '''Check if everyone is placed in the fin_placement.'''
-        failstr = ""
-        for person in self.repo.participants:
-            if person not in self.repo.placed_fin:
-                failstr += person + " "
-        if len(failstr) > 0:
-            raise Exception(failstr)
+    def _place_missing_friends(self):
+        particpants = self.repo.get_participants()
+        for r_ind, row in enumerate(self.fin_placement):
+            for p_ind, place in enumerate(row):
+                if place:
+                    friend = particpants[place].on_the_left()
+                    if friend and not self.repo.check_if_placed_fin(friend):
+                        self._place_fin(friend, (r_ind, p_ind-1))
+                        self.wishes_placed += 1
+                    friend = particpants[place].on_the_right()
+                    if friend and not self.repo.check_if_placed_fin(friend):
+                        self._place_fin(friend, (r_ind, p_ind+1))
+                        self.wishes_placed += 1
 
-    def _count_placed_wishes(self):
-        pass
+    def _place_random(self, name):
+        for row in self.fin_placement:
+            for place in row:
+                if not place:
+                    row_i = self.fin_placement.index(row)
+                    place_i = self.fin_placement[row_i].index(
+                        place)
+                    self._place_fin(name, (row_i, place_i))
+                    return
 
     def _place_fin(self, name: str, coordinates: tuple):
         '''Actually place a single person in a single seat in fin_placemnt.'''
@@ -351,12 +327,13 @@ class Placement:
 
         return True
 
-    def create_placement(self):
-        '''The big method that glues it all together'''
-        has_wishes = self.repo.return_has_wishes()
-        for person in has_wishes:
-            self.create_friendgroup(person)
-        self._combine_friendgroups()
-        self._do_fin_placement()
-        self._ensure_everyone_placed()
-        self._count_placed_wishes()
+
+###############################################################################################
+    def _ensure_everyone_placed(self):
+        '''Check if everyone is placed in the fin_placement.'''
+        failstr = ""
+        for person in self.repo.participants:
+            if person not in self.repo.placed_fin:
+                failstr += person + " "
+        if len(failstr) > 0:
+            raise Exception(failstr)

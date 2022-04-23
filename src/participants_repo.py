@@ -6,7 +6,7 @@ from participant import Participant
 class ParticipantsRepo:
     '''The repository. Attributes:'''
 
-    def __init__(self, filepath=None):
+    def __init__(self, filepath: str):
         self.participants = {}
         self._has_friendgroup = set()
         self.placed_fin = set()

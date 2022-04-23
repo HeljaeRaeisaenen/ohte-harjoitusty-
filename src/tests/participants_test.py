@@ -9,11 +9,10 @@ class TestParticipants(unittest.TestCase):
             __file__), "..", "data", "unittesting.csv")
         self.f = ParticipantsRepo(filepath)
 
-    def test_empty_setup_ok(self):
-        self.f = ParticipantsRepo()
-        self.assertEqual(len(self.f.participants), 0)
-        # should raise an exceptoin?
-
     def test_setup_from_file(self):
-        self.assertEqual(len(self.f.participants), 8)
+        self.assertEqual(len(self.f.get_participants()), 8)
         self.assertEqual(len(self.f.return_has_wishes()), 6)
+
+    def test_return_full_name(self):
+        name = "bananas"
+        self.assertTrue(self.f.is_in_participants(name))
