@@ -34,14 +34,18 @@ To run unit test for the program:
 
 `poetry run invoke test`
 
+
 To see a summary of save the results of the tests in an html file:
 
 `poetry run invoke coverage-report`
+
 
 Or to view the results instantly in your browser:
 
 `poetry run invoke coverage-html`
 
+
 To check the code with pylint:
 
 `poetry run invoke lint`
+
