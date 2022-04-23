@@ -5,6 +5,5 @@ src/data/testi.csv
 htmlcov
 src/data/testsave.csv
 .vscode
-testi.csv
 testsave.csv
 src/scrap.py
