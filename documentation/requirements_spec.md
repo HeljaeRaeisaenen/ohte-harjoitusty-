@@ -12,11 +12,11 @@ The application does not have a need for different user groups or for the abilit
 
 ![UI](https://user-images.githubusercontent.com/94612974/160600527-6d642e05-783a-45b2-8eb7-40e4f125eefd.png)
 
-The image reads "Placement Generator", "input a csv file", "number of tables", and "start". This should be the view the user sees when starting the application. Update: The user first sees a login screen, after which a screen similar to this is shown. _Done._ The user can write text into the fields. How the file is inputted is still undecided. Clicking the start-button will initiate the placement. The user should be able to control the application with a mouse and a keyboard: clicking on buttons and writing text.
+The image reads "Placement Generator", "input a csv file", "number of tables", and "start". This should be the view the user sees when starting the application. Update: The user first sees a login screen, after which a screen similar to this is shown. _Done._ The user can write text into the fields. How the file is inputted is still undecided. Clicking the start-button will initiate the placement. The user should be able to control the application with a mouse and a keyboard: clicking on buttons and writing text. _Done._
 
 ## Functionality
 
-In the initial draft, the user picks a csv file which contains the participants' names and their placement wishes and inputs it to the program along with the desired number of tables and participants. This should be possible using a GUI. The program creates the placement and outputs it into another csv file, (or maybe even a printable pdf, but this may not be feasible due to my the skill level).
+In the initial draft, the user picks a csv file which contains the participants' names and their placement wishes and inputs it to the program along with the desired number of tables and participants. This should be possible using a GUI. The program creates the placement and outputs it into another csv file, (or maybe even a printable pdf, but this may not be feasible due to my the skill level). _Done._
 
 ## Further development
 

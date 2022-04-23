@@ -1,4 +1,5 @@
 '''functions for reading and writing files'''
+from pathlib import Path
 
 
 def fileread(filepath: str):
@@ -38,15 +39,21 @@ def fileread(filepath: str):
 # only one supported
 
 
-def filewrite(filecontents: list, filepath=None):
+def filewrite(placement: list, filepath):
     '''Write a file
     Args:
-        filecontents: a list containing lines to be written
+        filecontents: a list containing lines to be written. List has sublists which have sublists
         filepath: the desired path and filename
     '''
-    savepath = filepath
+    filecontents = []
+    for index, row in enumerate(placement):
+        filecontents.append(row)
+        if index % 2 == 1:
+            filecontents.append([])
 
-    with open(savepath, "w", encoding="UTF-8") as file:
+    Path(filepath).touch()
+
+    with open(filepath, "w", encoding="UTF-8") as file:
         for line in filecontents:
             string = ""
             for piece in line:

@@ -18,3 +18,14 @@
 3 hours of work on the interface and on the program logic
 
 **Total of 10 hours**
+
+## Week 5
+6 hours of working on the program logic, making the code prettier and more OOB-y
+
+2 hours of working on the program logic
+
+3 hours of working on the program logic
+
+6 hours of working on the UI and correcting bugs, and adding error handling
+
+3 hours of working on login functionality and making a database

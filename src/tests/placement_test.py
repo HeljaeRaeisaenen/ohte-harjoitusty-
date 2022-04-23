@@ -1,46 +1,80 @@
 import unittest
 from placement import Placement
+import os
 
 
 class TestPlacement(unittest.TestCase):
     def setUp(self):
-        self.p = Placement(
-            1, "/home/raisaneh/k/ohte/ohte_harjo/src/data/unittesting.csv")
+        filepath = os.path.join(os.path.dirname(
+            __file__), "..", "data", "unittesting.csv")
+        self.p = Placement(1, filepath)
 
     def test_initialize(self):
-        self.assertEqual(self.p.tables, 1)
-        self.assertEqual(len(self.p.file.names), 8)
-        self.assertEqual(len(self.p.file.firstnames), len(self.p.file.names))
-        self.assertEqual(self.p.friendgroups, [])
-        self.assertLessEqual(len(self.p.file.wishes), len(self.p.file.names))
+        self.assertEqual(self.p.tables_n, 1)
+        self.assertEqual(len(self.p.repo.participants), 8)
+        self.assertEqual(len(self.p.fin_placement), 1)
 
     def test_create_friendgroup(self):
-        name = self.p.file.names[0]
-        luck = self.p.create_friendgroup(0)
-        '''at this point, whether create_friendgroup() will succeed or fail is unpredictable to me :D'''
-        if luck == "Bad luck":
-            # ooops
-            return
-        if luck == "ok":
-            self.assertTrue(self.p.file.placed[0])
-            self.assertEqual(len(self.p.friendgroups), 1)
-            #self.assertNotIn(None, self.p.friendgroups[0])
+        name = "Apples -"
+        self.p.create_friendgroup(name)
+        x = [self.p.repo.participants[name].on_the_left,
+             self.p.repo.participants[name].on_the_right,
+             self.p.repo.participants[name].opposite]
+        while None in x:
+            x.remove(None)
+        self.assertEqual(len(x), 3)
+
+    def test_is_placed_called_always(self):
+        name = "Apples -"
+        self.p.create_friendgroup(name)
+        x = self.p.repo.return_not_placed()
+        self.assertNotIn("Bananas -", x)
+        self.assertNotIn("Cherries -", x)
+        self.assertNotIn("Horseradish -", x)
 
     def test_create_friendgroup_bound_to_fail(self):
-        self.p.file.names.insert(0, "Peas -")
-        self.p.file.wishes.insert(0, ["Carrots -"])
-        self.p.file.firstnames.insert(0, "Peas")
-        self.p.file.placed.append(False)
-        x = self.p.create_friendgroup(0)
-        print(self.p.friendgroups)
-        self.assertEqual(x, "Bad luck")
+        filepath = os.path.join(os.path.dirname(
+            __file__), "..", "data", "unittesting_additional.csv")
+        self.p.repo.initialize(filepath)
+        self.assertIn("Peas -", self.p.repo.participants)
+        self.p.create_friendgroup("Peas -")
+        x = [self.p.repo.participants["Peas -"].on_the_left,
+             self.p.repo.participants["Peas -"].on_the_right,
+             self.p.repo.participants["Peas -"].opposite]
+        while None in x:
+            x.remove(None)
+        self.assertEqual(len(x), 0)
 
     def test_create_friendgroup_onewish(self):
-        pass
+        # self.setUp()
+        name = "Figs -"
+        self.p.create_friendgroup(name)
+        x = [self.p.repo.participants[name].on_the_left,
+             self.p.repo.participants[name].on_the_right,
+             self.p.repo.participants[name].opposite]
+        while None in x:
+            x.remove(None)
+        self.assertEqual(len(x), 1)
 
-    def test_create_friendgroup_everyone(self):
-        pass
+    def test_create_fromfirstnames(self):
+        name = "Bananas -"
+        x = self.p.repo.participants[name].wishes
+        self.assertGreaterEqual(len(x), 1)
+        self.assertIn("Dragonfruits -", x)
 
-    def test_create_friendroup_fromfirstnames(self):
-        pass
-    # rememnber lowercase
+    def test_create_tables(self):
+        filepath = os.path.join(os.path.dirname(
+            __file__), "..", "data", "testi.csv")
+        self.p.repo.initialize(filepath)
+        self.p = Placement(1, filepath)
+        self.assertEqual(len(self.p.fin_placement), 1)
+        self.assertGreaterEqual(len(self.p.fin_placement[0][0])*2, 42)
+
+        filepath = os.path.join(os.path.dirname(
+            __file__), "..", "data", "testi.csv")
+        self.p.repo.initialize(filepath)
+        self.p = Placement(2, filepath)
+        self.assertEqual(len(self.p.fin_placement), 2)
+        x = (len(self.p.fin_placement[0][1]) * 2) + \
+            (len(self.p.fin_placement[1][1]) * 2)
+        self.assertGreaterEqual(x, 42)
