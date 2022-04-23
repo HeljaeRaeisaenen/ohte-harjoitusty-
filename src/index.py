@@ -4,7 +4,7 @@ from ui.ui import UI
 
 
 WINDOW = Tk()
-WINDOW.geometry("600x500")
+WINDOW.geometry("600x600")
 WINDOW.title("Plassiapuri – Placement helper")
 style = ttk.Style(WINDOW)
 style.theme_use('clam')

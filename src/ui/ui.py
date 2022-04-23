@@ -3,6 +3,7 @@ from ui.ui_login import Login
 from ui.ui_begin import Begin
 from ui.ui_finish import Finished
 from ui.ui_logout import Logout
+from time import sleep
 
 
 class UI:
@@ -32,18 +33,21 @@ class UI:
         self._current_view = Login(self._root, self._show_main_view)
         self._current_view.pack()
 
-    def _show_main_view(self, user):
+    def _show_main_view(self, user, language):
         self._destroy_current_view()
         self._current_user = user
-        self._current_view = Begin(self._root, user, self._show_finished_view)
+        self._current_view = Begin(
+            self._root, user, self._show_finished_view, language)
 
-    def _show_finished_view(self, file_to_write):
+    def _show_finished_view(self, file_to_write, language):
         self._destroy_current_view()
         self._current_view = Finished(
-            self._root, file_to_write, self.show_logout_view)
+            self._root, file_to_write, self.show_logout_view, language)
 
-    def show_logout_view(self):
+    def show_logout_view(self, language):
         self._destroy_current_view()
-        self._current_view = Logout(self._root, self._show_login_view)
+        self._current_view = Logout(self._root, language)
         self._current_user = None
         self._current_view.pack()
+        sleep(1)
+        self._show_login_view()

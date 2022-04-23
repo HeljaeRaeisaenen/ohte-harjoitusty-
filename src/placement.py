@@ -26,7 +26,6 @@ class Placement:
         self._create_tables()
         self.create_placement()
 
-
     def _check_everything_ok(self):
         if self.tables_n > len(self.repo.get_participants()):
             raise Exception("There are more tables than people")
@@ -179,7 +178,6 @@ class Placement:
                         participants[wish])
                     participants[wish].place()
 
-
     def _friend_row(self, name):
         '''Make a list from the seating info in the Particpant objects. The list is like a
         row in the finished seating.
@@ -196,6 +194,8 @@ class Placement:
 
 
 ###############################################################################################
+
+
     def _do_fin_placement(self):
         '''Start putting people in friendgroups in the fin_placement.'''
 
@@ -220,8 +220,6 @@ class Placement:
                     self._place_next_to_name(person, wish)
         for person in self.repo.return_not_placed_fin():
             self._place_random(person)
-
-
 
     def _place_friend_row(self, row, friends: list):
         '''Place a friend row in a table in fin_placement.
@@ -257,7 +255,6 @@ class Placement:
                     success = self._place_fin(new, (opposite_row, indx))
         if success:
             self.wishes_placed += 1
-
 
     def _place_next_to_name(self, placed, friend):
         #friend = self.repo.return_full_name(friend)
@@ -329,6 +326,8 @@ class Placement:
 
 
 ###############################################################################################
+
+
     def _ensure_everyone_placed(self):
         '''Check if everyone is placed in the fin_placement.'''
         failstr = ""
