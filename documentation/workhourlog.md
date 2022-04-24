@@ -34,4 +34,4 @@
 
 **Total of 24 hours**
 
-### Total hours: 41
+### Total hours: 43
