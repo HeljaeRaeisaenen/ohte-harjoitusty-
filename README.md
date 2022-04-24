@@ -35,22 +35,17 @@ in the directory where the program is.
 To use the program, you need a csv file with n rows and exactly 2 columns, with the first column containing names (Firstname Lastname), and the second, the names of the wished company, preferably separated by a comma. The file must use a comma as the delimiter. It's assumed that the first row contains headers, and will be ignored. In case you don't have such a specific file, [here's a file you can test the program on](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/src/data/testi.csv). In the src/data folder there are some more files. All the files have been created just for testing purposes.
 
 ### Commands
-To run unit tests for the program:
+- To run unit tests for the program:
 
 `poetry run invoke test`
 
 
-To see a summary of save the results of the tests in an html file:
+- To see a summary of save the results of the tests in an html file:
 
 `poetry run invoke coverage-report`
 
 
-Or to view the results instantly in your browser:
-
-`poetry run invoke coverage-html`
-
-
-To check the code with pylint:
+- To check the code with pylint:
 
 `poetry run invoke lint`
 
