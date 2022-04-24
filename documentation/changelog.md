@@ -14,5 +14,6 @@
 - new unit tests
 - changed things about class Placement, and made it work better
 - added new methods to class Placement
-- created a database, made it possible to log in and out of the program
+- created a database, made it possible to log in and out of the program using a database
 - added some error safety measures
+- added possibility to change UI language (English or Finnish)
