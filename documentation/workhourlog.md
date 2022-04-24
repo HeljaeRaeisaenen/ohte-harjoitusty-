@@ -31,3 +31,5 @@
 3 hours of working on login functionality and making a database
 
 4 hours of trying to use tkinter and giving the code a facelift
+
+**Total of 24 hours**
