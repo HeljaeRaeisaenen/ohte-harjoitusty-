@@ -33,3 +33,5 @@
 4 hours of trying to use tkinter and giving the code a facelift
 
 **Total of 24 hours**
+
+### Total hours: 41
