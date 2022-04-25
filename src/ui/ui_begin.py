@@ -8,10 +8,11 @@ from participants_repo import ParticipantsRepo
 class Begin:
     '''if login was succesful, show this view'''
 
-    def __init__(self, root, user, placement_is_finished, language):
+    def __init__(self, root, user, placement_is_finished, language="FI"):
         self._root = root
         self._current_view = None
         self._current_user = user
+        self._language = "FI"
         self._language = language
         self._frame = None
         self._tables_n = None
@@ -246,7 +247,7 @@ class Begin:
             try:
                 pla = Placement(
                     self._tables_n, ParticipantsRepo(self._filepath))
-                self._placement_is_finished(pla.fin_placement, self._language)
+                self._placement_is_finished(self._current_user, pla.fin_placement, self._language)
             except Exception as eror:
                 self.errors(eror)
 

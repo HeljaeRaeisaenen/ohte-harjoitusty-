@@ -33,10 +33,7 @@ def fileread(filepath: str):
     output.sort(key=lambda a: len("".join(a[1])), reverse=True)
     return output
 
-
 # The names, wishes are sorted by descending wish length
-# On the delimiter: comma is the default delimiter the TKO-äly website uses, and it's the
-# only one supported
 
 
 def filewrite(placement: list, filepath):

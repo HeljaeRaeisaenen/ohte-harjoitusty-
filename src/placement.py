@@ -7,7 +7,8 @@ class Placement:
     Attributes:
         repo = a Participants object already set up
         tables_n = number of tables set by the user
-        fin_placement = the finished placement as a 2D matrix
+        fin_placement = the finished placement as a 2D matrix. A list, contains lists that
+                        represent the rows. Each item in the sublist represents a seat.
         total_wishes = the number of individuals wished as company by total of participants
         wishes_placed = number of the aforementioned, that have been filled in fin_placement
         '''
@@ -27,6 +28,7 @@ class Placement:
         self.create_placement()
 
     def _check_everything_ok(self):
+        '''Check if there are more tables than people'''
         if self.tables_n > len(self.repo.get_participants()):
             raise Exception("There are more tables than people")
 
@@ -105,6 +107,7 @@ class Placement:
             self._cluster_into_neighbors(name, cluster)
 
     def _place_friend_rows(self, friend_rows):
+        '''Place all friend rows to fin_placement'''
         table_row = self.tables_n * 2
 
         while len(friend_rows) > 0:
@@ -136,7 +139,10 @@ class Placement:
 
     def _place_friend_secondary(self, name):
         '''Check iif it's ok to place a person who wished for person x in x's friendgroup.
-        Iterate through the wishes and check if our person appears in any of them'''
+        Iterate through the wishes and check if our person appears in any of them
+            Args: name of whose friend to be added
+            Returns: the name of the person to be placed in name's friendgroup if doing so is
+            possible, else: str "fail"'''
         participants = self.repo.get_participants()
         for random_name, random_obj in participants.items():
             if not random_obj.is_placed():
@@ -240,6 +246,11 @@ class Placement:
                 break
 
     def _placement_place_opposite(self, row):
+        '''Iterate through a row in the fin_placement and check if any person in it has a friend to
+        be placed opposite of them. If so, place them opposite
+        Args:
+            row: index of the row
+        '''
         success = False
 
         if row % 2 == 1:
@@ -257,6 +268,11 @@ class Placement:
             self.wishes_placed += 1
 
     def _place_next_to_name(self, placed, friend):
+        '''Place 'frined' next to 'placed' if possible
+        Args:
+            placed: a person already in fin_placement
+            friend: a person who has wished to be placed next to 'placed'
+        '''
         #friend = self.repo.return_full_name(friend)
         if placed not in self.repo.placed_fin:
             return
@@ -289,6 +305,8 @@ class Placement:
             self.wishes_placed += 1
 
     def _place_missing_friends(self):
+        '''If some friends haven't been placed yet, place them. To make sure.
+        '''
         particpants = self.repo.get_participants()
         for r_ind, row in enumerate(self.fin_placement):
             for p_ind, place in enumerate(row):
@@ -303,6 +321,10 @@ class Placement:
                         self.wishes_placed += 1
 
     def _place_random(self, name):
+        '''Place people who don't have any wishes or whose wishes couldn't be fulfilled.
+        Args:
+            name: a person not yet placed
+        '''
         for row in self.fin_placement:
             for place in row:
                 if not place:
@@ -313,7 +335,14 @@ class Placement:
                     return
 
     def _place_fin(self, name: str, coordinates: tuple):
-        '''Actually place a single person in a single seat in fin_placemnt.'''
+        '''Actually place a single person in a single seat in fin_placemnt.
+        Args:
+            name: the person to be placed
+            coordinates: the coordinates where to place the person. (index of the row, index of the
+            seat)
+        Returns:
+            Bool: true if succesful, else: False
+        '''
         if self.fin_placement[coordinates[0]][coordinates[1]]:
             return False
 

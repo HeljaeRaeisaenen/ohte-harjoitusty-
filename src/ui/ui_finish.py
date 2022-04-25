@@ -7,16 +7,19 @@ from readwrite import filewrite
 class Finished:
     '''View where user saves the file and logs out'''
 
-    def __init__(self, root, file, finish, language):
+    def __init__(self, root, user, file, another_round, finish, language):
         self._root = root
+        self._user = user
         self._frame = None
         self._file = file
+        self._new_placement = another_round
         self._finish_logout = finish
         self._languge = language
         self._label_str = StringVar()
         self._l1_str = StringVar()
         self._save_str = StringVar()
         self._out_strvar = StringVar()
+        self._new_str = StringVar()
         if language == "FI":
             self._init_strvars_fi()
         if language == "EN":
@@ -36,12 +39,14 @@ class Finished:
         self._label_str.set("Valmista!")
         self._l1_str.set("Tiedosto tallentuu csv-muodossa")
         self._save_str.set("Tallenna tiedosto")
+        self._new_str.set("Luo uusi plaseeraus")
         self._out_strvar.set("Kirjaudu ulos")
 
     def _init_strvars_en(self):
         self._label_str.set("All done!")
         self._l1_str.set("The file will be saved in csv format.")
         self._save_str.set("Save file")
+        self._new_str.set("Create a new placement")
         self._out_strvar.set("Logout")
 
     def _init_view(self):
@@ -53,6 +58,10 @@ class Finished:
             master=self._frame,
             textvariable=self._save_str,
             command=self._handle_save_button_press)
+        newbutton = ttk.Button(
+            master=self._frame,
+            textvariable=self._new_str,
+            command=self._handle_new_button_press)
         logoutbutton = ttk.Button(
             master=self._frame,
             textvariable=self._out_strvar,
@@ -62,7 +71,8 @@ class Finished:
                    sticky=constants.EW, padx=200, pady=10)
         savebutton.grid(row=2, column=0, padx=200, pady=10)
         label1.grid(row=1, column=0, padx=200, pady=10)
-        logoutbutton.grid(row=4, column=0, padx=200, pady=10)
+        newbutton.grid(row=4, column=0, padx=200, pady=10)
+        logoutbutton.grid(row=5, column=0, padx=200, pady=10)
         self.pack()
 
     def _handle_save_button_press(self):
@@ -77,3 +87,6 @@ class Finished:
 
     def _handle_logout_button_press(self):
         self._finish_logout(self._languge)
+
+    def _handle_new_button_press(self):
+        self._new_placement(self._user, self._languge)

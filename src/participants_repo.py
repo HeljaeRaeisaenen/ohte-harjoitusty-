@@ -4,7 +4,11 @@ from participant import Participant
 
 
 class ParticipantsRepo:
-    '''The repository. Attributes:'''
+    '''The repository.
+    Attributes:
+        participants: a dictionary of the people, key = name, value = a Participant object
+        has_friendgroup: people who have people sitting next to them
+        placed_fin: people who have been placed in the final '''
 
     def __init__(self, filepath: str):
         self.participants = {}
@@ -31,9 +35,11 @@ class ParticipantsRepo:
         return self.participants
 
     def get_has_friendgroup(self):
+        '''Returns the attribute'''
         return self._has_friendgroup
 
     def add_has_friendgroup(self, name):
+        '''If a person gets a friendgroup, add them to the set'''
         self._has_friendgroup.add(name)
 
     def is_in_participants(self, name: str):
@@ -70,8 +76,7 @@ class ParticipantsRepo:
         return output
 
     def return_not_placed(self):
-        '''Returns a list containing all names (keys to self.participants) that haven't been
-        placed'''
+        '''Returns a list containing all names (keys to self.participants) that don't have a friendgroup'''
         output = []  # use sets instead?
         for person, obj in self.participants.items():
             if not obj.is_placed():
@@ -80,7 +85,7 @@ class ParticipantsRepo:
 
     def return_not_placed_fin(self):
         '''Returns a list containing all names (keys to self.participants) that haven't been
-        placed'''
+        placed in the final seating'''
         output = []  # use sets instead?
         for person in self.participants:
             if not person in self.placed_fin:

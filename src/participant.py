@@ -2,13 +2,23 @@
 
 
 class Participant:
-    '''Attributes: name, first name, wishes, placed-or-not'''
+    '''A data structure for a single participant. 
+    Attributes: 
+        name: the full name of the person
+        first name: the first name
+        wishes: namea of the people who the person wishes for company. It's assured elsewhere that
+                these names exist in the list of participants.
+        placed: whether the person has a place or not
+        place_on_the_left: who sits on the person's left hand side
+        place_on_the_right: the same but on the right
+        place_opposite: the same but opposite
+        seat_coords: the coordinates of the person's assigned seat as a tuple (row, seat)'''
 
-    def __init__(self, info):
-        '''All info about a single participant. The "info" is a list with
-        i=0 is the full name str, i=1 is a list containing strs of the wishes'''
-        self.name = info
-        self._first_name = info.split(" ")[0]
+    def __init__(self, name):
+        '''Args: "name" is a list with i=0 is the full name str, i=1 is a list containing
+        strings of the wishes'''
+        self.name = name
+        self._first_name = name.split(" ")[0]
         self.wishes = []
         self._placed = False
         self._place_on_the_left = None
@@ -45,6 +55,7 @@ class Participant:
         self._place_opposite = name
 
     def get_firstname(self):
+        '''Method to access attribute'''
         return self._first_name
 
     def is_placed(self):

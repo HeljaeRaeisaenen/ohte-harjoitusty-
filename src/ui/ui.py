@@ -39,10 +39,10 @@ class UI:
         self._current_view = Begin(
             self._root, user, self._show_finished_view, language)
 
-    def _show_finished_view(self, file_to_write, language):
+    def _show_finished_view(self, user, file_to_write, language):
         self._destroy_current_view()
         self._current_view = Finished(
-            self._root, file_to_write, self.show_logout_view, language)
+            self._root, user, file_to_write, self._show_main_view, self.show_logout_view, language)
 
     def show_logout_view(self, language):
         self._destroy_current_view()
