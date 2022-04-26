@@ -33,7 +33,19 @@ classDiagram
     
   class UI
   ```
-  The UI uses the attributes and methods of the class Placement, which uses Participants as a data structure.
+  The UI uses the attributes and methods of the class Placement, which uses ParticipantsRepo as a data structure. The ParticipantsRepo contains objects of class Participant.
+
+## The user interface
+The user interface has three classes, and distinct views:
+
+- a login view,
+- a "Begin" view where the user can give the program a file and specifications,
+- and a "Finish" view, where the user can save the finished placement and log out.
+
+A fourth class called UI controls the transitions between these. There is also an info view, which can be opened from the second, but this contains only some text and is a part of the same class. The class Begin also uses the application logic classes.
+
+## Application logic
+
 
 ## Main functionality
 ### The user logs in
@@ -53,7 +65,7 @@ sequenceDiagram
   deactivate L
   P-->>U: "you can enter"
   ```
-  This is what happens if everything goes well.
+  When the program is started, the user can log in. This is what happens if everything goes well.
   
   ```mermaid
 sequenceDiagram
@@ -70,7 +82,7 @@ sequenceDiagram
   deactivate L
   P-->>U: you can enter
   ```
-  This happpens if the username doesn't exist.
+  This happpens if the username doesn't exist. A new user is automatically created.
   
   ### Use of the program once logged in
   
@@ -99,4 +111,4 @@ sequenceDiagram
   P-->>U: "ok"
 ```
   
-  Here's what happens next.
+  The main logic of the program is initiated from the user interface. This sequence happens when the user has succesfully given the program a csv file and a number for tables.
