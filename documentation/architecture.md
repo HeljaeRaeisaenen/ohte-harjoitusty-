@@ -45,7 +45,19 @@ The user interface has three classes, and distinct views:
 A fourth class called UI controls the transitions between these. There is also an info view, which can be opened from the second, but this contains only some text and is a part of the same class. The class Begin also uses the application logic classes.
 
 ## Application logic
+The class Placement is responsible for the logical part of the program. It uses its attributes and methods to create a placement, following four steps:
 
+1. Initializing everything and making sure the user input is usable
+2. Grouping the participants of the event, or the names in the inputted file, together placed on their wishes
+3. Placing these groups in lists that represent tables, and will later be saved into  a csv file
+4. Placing people left out in step 3 in the lists, and ensuring no one was left out
+
+The logic isn't very refined, and it certainly can't make an optimal seating arrangement.
+
+## Storing the information
+The login credentials are stored in a local Sqlite database in plaintext.
+
+The finished seating arrangement is saved in an csv file. The user can decide the location and name of the file.
 
 ## Main functionality
 ### The user logs in
@@ -111,4 +123,4 @@ sequenceDiagram
   P-->>U: "ok"
 ```
   
-  The main logic of the program is initiated from the user interface. This sequence happens when the user has succesfully given the program a csv file and a number for tables.
+  The logic of the program is initiated from the user interface. This sequence happens when the user has succesfully given the program a csv file and a number for tables.
