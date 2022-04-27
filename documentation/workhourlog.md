@@ -34,4 +34,8 @@
 
 **Total of 24 hours**
 
-### Total hours: 43
+## Week 5
+3 hours of improving the UI and adding functionality to it
+2 hours of cleaning and testing code
+
+### Total hours: 48
