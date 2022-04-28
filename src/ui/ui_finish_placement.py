@@ -14,7 +14,7 @@ class Finished:
         self._user = user
         self._frame = None
         self._file = file
-        self._wish_rate = wish_rate
+        self._wish_rate = round(wish_rate)
         self._new_placement = another_round
         self._finish_logout = finish
         self._languge = language
