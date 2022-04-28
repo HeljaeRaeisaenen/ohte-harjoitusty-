@@ -12,8 +12,7 @@ def get_database_connection():
         connection = sqlite3.connect(os.path.join(
             dirname, "data", "login_database.sqlite"))
         connection.row_factory = sqlite3.Row
-    except:
-        print("ooo")
+    except FileNotFoundError:
         Path(os.path.join(
             dirname, "data", "login_database.sqlite")).touch()
         connection = sqlite3.connect(os.path.join(

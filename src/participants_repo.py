@@ -12,6 +12,7 @@ class ParticipantsRepo:
 
     def __init__(self, filepath: str):
         self.participants = {}
+        self._odd_wishes = {}
         self._has_friendgroup = set()
         self.placed_fin = set()
         # the existence of filepath is ensured elsewhere, in the ui
@@ -53,6 +54,9 @@ class ParticipantsRepo:
             return fullname
         return False
 
+    def _handle_odd_names(self):
+        pass
+
     def return_full_name(self, name: str):
         '''If only first name is known, return full name. If full name is put in as an argument,
         the full name is returned. Will not be reliable, if there are many participants with the
@@ -76,7 +80,9 @@ class ParticipantsRepo:
         return output
 
     def return_not_placed(self):
-        '''Returns a list containing all names (keys to self.participants) that don't have a friendgroup'''
+        '''Returns a list containing all names (keys to self.participants) that don't have a
+        friendgroup.
+        '''
         output = []  # use sets instead?
         for person, obj in self.participants.items():
             if not obj.is_placed():

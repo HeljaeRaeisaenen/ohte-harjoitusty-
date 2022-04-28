@@ -1,7 +1,7 @@
-'''View once user has logged in'''
+'''View where user can make placement'''
 from tkinter import filedialog, ttk, constants, StringVar
 from tkinter.simpledialog import askinteger
-from placement import Placement
+from placement import Placement, TablesException
 from participants_repo import ParticipantsRepo
 
 
@@ -12,7 +12,6 @@ class Begin:
         self._root = root
         self._current_view = None
         self._current_user = user
-        self._language = "FI"
         self._language = language
         self._frame = None
         self._tables_n = None
@@ -247,7 +246,8 @@ class Begin:
             try:
                 pla = Placement(
                     self._tables_n, ParticipantsRepo(self._filepath))
-                self._placement_is_finished(self._current_user, pla.fin_placement, self._language)
+                wish_rate = (pla.wishes_placed / pla.total_wishes) * 100
+                self._placement_is_finished(self._current_user, pla.fin_placement, wish_rate, self._language)
             except Exception as eror:
                 self.errors(eror)
 
@@ -257,18 +257,30 @@ class Begin:
         self._lable_str = StringVar()
         self._label2_str = StringVar()
         self._return_str = StringVar()
+        err = None
+
         if isinstance(errname, IndexError):
             if self._language == "FI":
-                errname = "Tiedostossa oli liian vähän tai paljon rivejä tai sarakkeita."
+                err = "Tiedostossa oli liian vähän tai paljon rivejä tai sarakkeita."
             else:
-                errname = "The file had too many or too few rows or columns."
+                err = "The file had too many or too few rows or columns."
+        if isinstance(errname, TablesException):
+            err = errname.value
+            if self._language == "FI":
+                err = "Pöytiä oli enemmän kuin osallistujia"
 
         if self._language == "FI":
-            self._lable_str.set(f"Tapahtui virhe: {errname}")
+            if err:
+                self._lable_str.set(f"Tapahtui virhe: {err}")
+            else:
+                self._lable_str.set(f"Tapahtui virhe.")
             self._label2_str.set("Tarkista tiedostosi muoto ja sisältö")
             self._return_str.set("Takaisin")
         else:
-            self._lable_str.set(f"An error occurred: {errname}")
+            if err:
+                self._lable_str.set(f"An error occurred: {err}")
+            else:
+                self._lable_str.set(f"An error occurred.")
             self._label2_str.set(
                 "Please check the form and contents of your file")
             self._return_str.set("Back")

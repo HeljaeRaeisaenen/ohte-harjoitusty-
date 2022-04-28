@@ -1,6 +1,6 @@
 '''Login view'''
 from tkinter import constants, ttk, StringVar
-from login import Logging
+from database_functions import Logging
 from database_connection import get_database_connection
 
 
@@ -43,7 +43,7 @@ class Login:
         self.pack()
 
     def _init_strvars_fi(self):
-        self._title_label.set("PLassigeneraattori")
+        self._title_label.set("Plassigeneraattori")
         self._2_label.set("Älä käytä mitään salasanaa, jota käytät muualla.")
         self._3_label.set("Salasanan voi jättää tyhjäksi.",)
         self._more_label.set("Jos käyttäjätunnusta ei ole, se luodaan.")
@@ -58,7 +58,7 @@ class Login:
         self._2_label.set("Do not use a password you use elsewhere.")
         self._3_label.set("The password field can be left empty.",)
         self._more_label.set(
-            "If the username doesn't exist, it will be created.")
+            "If the username doesn't exist, it is created.")
         self._usr_label.set("Username:")
         self._pass_label.set("Password:")
         self._start_label.set("Login")
@@ -149,7 +149,7 @@ class Login:
             if not is_username:
                 log.create_username(username_value, password_value)
                 log.close_connection()
-                self.login_success(username_value)
+                self.login_success(username_value, self._language)
                 return
             verify = log.verify_password(username_value, password_value)
             if verify:

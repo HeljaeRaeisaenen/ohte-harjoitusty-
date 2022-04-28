@@ -2,8 +2,8 @@
 
 
 class Participant:
-    '''A data structure for a single participant. 
-    Attributes: 
+    '''A data structure for a single participant.
+    Attributes:
         name: the full name of the person
         first name: the first name
         wishes: namea of the people who the person wishes for company. It's assured elsewhere that

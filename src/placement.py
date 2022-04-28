@@ -30,7 +30,7 @@ class Placement:
     def _check_everything_ok(self):
         '''Check if there are more tables than people'''
         if self.tables_n > len(self.repo.get_participants()):
-            raise Exception("There are more tables than people")
+            raise TablesException()
 
     def _count_wishes(self):
         ''' Count how many wishes the people have in total. This will be used to get a feel of
@@ -365,3 +365,12 @@ class Placement:
                 failstr += person + " "
         if len(failstr) > 0:
             raise Exception(failstr)
+
+class TablesException(Exception):
+    '''A specific exception for class Placement'''
+    def __init__(self):
+        super().__init__()
+        self.value = "There are more tables than people"
+
+    def __str__(self):
+        return repr(self.value)

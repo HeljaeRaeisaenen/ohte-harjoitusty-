@@ -2,20 +2,24 @@
 
 from tkinter import filedialog, ttk, constants, StringVar
 from readwrite import filewrite
+from database_functions import Logging
+from database_connection import get_database_connection
 
 
 class Finished:
     '''View where user saves the file and logs out'''
 
-    def __init__(self, root, user, file, another_round, finish, language):
+    def __init__(self, root, user, file, wish_rate, another_round, finish, language):
         self._root = root
         self._user = user
         self._frame = None
         self._file = file
+        self._wish_rate = wish_rate
         self._new_placement = another_round
         self._finish_logout = finish
         self._languge = language
         self._label_str = StringVar()
+        self._wish_str = StringVar()
         self._l1_str = StringVar()
         self._save_str = StringVar()
         self._out_strvar = StringVar()
@@ -25,6 +29,7 @@ class Finished:
         if language == "EN":
             self._init_strvars_en()
 
+        self._save_stats()
         self._init_view()
 
     def pack(self):
@@ -35,8 +40,14 @@ class Finished:
         '''Destroy the view'''
         self._frame.destroy()
 
+    def _save_stats(self):
+        log = Logging(get_database_connection())
+        log.add_statistics(self._user, self._wish_rate)
+        log.close_connection()
+
     def _init_strvars_fi(self):
         self._label_str.set("Valmista!")
+        self._wish_str.set(f"{self._wish_rate}% plaseeraustoiveista täytetty.")
         self._l1_str.set("Tiedosto tallentuu csv-muodossa")
         self._save_str.set("Tallenna tiedosto")
         self._new_str.set("Luo uusi plaseeraus")
@@ -44,6 +55,8 @@ class Finished:
 
     def _init_strvars_en(self):
         self._label_str.set("All done!")
+        self._wish_str.set(
+            f"{self._wish_rate}% of the seating wishes have been fulfilled.")
         self._l1_str.set("The file will be saved in csv format.")
         self._save_str.set("Save file")
         self._new_str.set("Create a new placement")
@@ -52,6 +65,7 @@ class Finished:
     def _init_view(self):
         self._frame = ttk.Frame(master=self._root)
         label = ttk.Label(master=self._frame, textvariable=self._label_str)
+        labelwish = ttk.Label(master=self._frame, textvariable=self._wish_str)
         label1 = ttk.Label(master=self._frame,
                            textvariable=self._l1_str)
         savebutton = ttk.Button(
@@ -69,8 +83,10 @@ class Finished:
         )
         label.grid(row=0, column=0, columnspan=3,
                    sticky=constants.EW, padx=200, pady=10)
-        savebutton.grid(row=2, column=0, padx=200, pady=10)
-        label1.grid(row=1, column=0, padx=200, pady=10)
+        labelwish.grid(row=1, column=0, columnspan=3,
+                       sticky=constants.EW, padx=200, pady=10)
+        savebutton.grid(row=3, column=0, padx=200, pady=10)
+        label1.grid(row=2, column=0, padx=200, pady=10)
         newbutton.grid(row=4, column=0, padx=200, pady=10)
         logoutbutton.grid(row=5, column=0, padx=200, pady=10)
         self.pack()
