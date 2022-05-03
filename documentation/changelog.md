@@ -17,3 +17,7 @@
 - created a database, made it possible to log in and out of the program using a database
 - added some error safety measures
 - added possibility to change UI language (English or Finnish)
+
+### Week 6
+- added user statistics and ability to view them
+- changed folder structure
