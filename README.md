@@ -16,6 +16,7 @@ The application creates seating arrangements for parties. The seating is influen
 
 ## Releases
 [First release (week 5)](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/releases/tag/viikko5oikea)
+
 [Second release (week 6)](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/releases/tag/viikko6)
 
 ## Installing and terminal commands
