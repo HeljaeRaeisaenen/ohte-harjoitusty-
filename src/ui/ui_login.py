@@ -1,7 +1,7 @@
 '''Login view'''
 from tkinter import constants, ttk, StringVar
-from database_functions import Logging
-from database_connection import get_database_connection
+from file_and_database_functions.database_functions import Logging
+from file_and_database_functions.database_connection import get_db_connection
 
 
 class Login:
@@ -144,7 +144,7 @@ class Login:
         if username_value == "":
             self.login_failure()
         else:
-            log = Logging(get_database_connection())
+            log = Logging(get_db_connection())
             is_username = log.find_username(username_value)
             if not is_username:
                 log.create_username(username_value, password_value)

@@ -1,24 +1,26 @@
 '''View where user can make placement'''
 from tkinter import filedialog, ttk, constants, StringVar
 from tkinter.simpledialog import askinteger
-from placement import Placement, TablesException
-from participants_repo import ParticipantsRepo
+from application_logic.placement import Placement, TablesException
+from application_logic.participants_repo import ParticipantsRepo
 
 
 class Begin:
     '''if login was succesful, show this view'''
 
-    def __init__(self, root, user, placement_is_finished, language="FI"):
+    def __init__(self, root, user, info_button, info_return_command, placement_is_finished, language="FI"):
         self._root = root
         self._current_view = None
         self._current_user = user
         self._language = language
         self._frame = None
-        self._tables_n = None
+        self._tables_n = 0
         self._filepath = None
         self._file_strvar = StringVar()
         self._file_strvar.set("               ")
         self._button_strvar = StringVar()
+        self._info_button_press = info_button
+        self._info_return = info_return_command
         self._placement_is_finished = placement_is_finished
 
         self._label_label = StringVar()
@@ -91,7 +93,7 @@ class Begin:
             filesuccess = ttk.Label(
                 master=self._frame, textvariable=self._file_strvar, foreground="blue")
 
-        if self._tables_n:
+        if self._tables_n != 0:
             buttonsuccess = ttk.Label(
                 master=self._frame, textvariable=self._button_strvar, foreground="blue")
         else:
@@ -114,6 +116,10 @@ class Begin:
         beginbutton.grid(row=7, column=0, columnspan=2, padx=200, pady=50)
 
         self.pack()
+
+    def _handle_info_button_press(self):
+        self._info_button_press(
+            self._info_return, self._current_user, self._language)
 
     def _tables_n_verification_view(self):
         self.destroy()
@@ -161,15 +167,16 @@ class Begin:
         else:
             self._button_strvar.set(
                 f"Number of tables selected: {self._tables_n}")
-        if self._tables_n:
-            if self._tables_n > 5 or self._tables_n == 0:
+        if self._tables_n != 0:
+            if self._tables_n > 5:
                 self._tables_n_verification_view()
                 return
         self._init_view()
 
     def _handle_open_button_press(self):
         self._filepath = filedialog.askopenfilename(
-            filetypes=[("CSV file", "*.csv")])  # add initialdir=""
+            filetypes=[("CSV file", "*.csv")])
+        filename = self._filepath.split("/")[-1]
         if not self._filepath:
             if self._language == "FI":
                 self._file_strvar.set("Et valinnut tiedostoa")
@@ -177,58 +184,11 @@ class Begin:
                 self._file_strvar.set("No file selected")
         else:
             if self._language == "FI":
-                self._file_strvar.set("Tiedosto valittu")
+                self._file_strvar.set(f"Tiedosto valittu: {filename}")
             else:
-                self._file_strvar.set("File selected")
+                self._file_strvar.set(f"File selected: {filename}")
         self._init_view()
-
-    def _handle_info_button_press(self):
-        self.destroy()
-
-        if self._language == "FI":
-            self.labl_str.set(
-                "Csv-tiedostossa tulee olla vain 2 saraketta, joista ensimmäisessä")
-            self.l2_str.set(
-                "tulee olla osallistujien nimet (Etunimi Sukunimi), ja toisessa toivotut")
-            self.l3_str.set("seuralaiset pilkulla eroteltuna.")
-            self.l5_str.set(
-                "Tiedoston solujen erottimena tulle olla pilkku (,).")
-            self.back_str.set("Takaisin")
-        else:
-            self.labl_str.set(
-                "The csv file can only have 2 columns, of which the first must have")
-            self.l2_str.set(
-                "the names of the participants (Firstname Lastname), and the other")
-            self.l3_str.set("the wished company, separated by commas.")
-            self.l5_str.set("The delimiter of the filemust be a comma (,).")
-            self.back_str.set("Back")
-
-        self._frame = ttk.Frame(master=self._root)
-        label = ttk.Label(
-            master=self._frame, textvariable=self.labl_str)
-        l2 = ttk.Label(
-            master=self._frame, textvariable=self.l2_str)
-        l3 = ttk.Label(master=self._frame, textvariable=self.l3_str)
-        l4 = ttk.Label(master=self._frame, text="                ")
-        l5 = ttk.Label(
-            master=self._frame, textvariable=self.l5_str)
-        returnbutton = ttk.Button(
-            master=self._frame,
-            textvariable=self.back_str,
-            command=self._init_view)
-        label.grid(row=0, column=0, columnspan=3,
-                   sticky=constants.EW, padx=50, pady=10)
-        l2.grid(row=1, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l3.grid(row=3, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l4.grid(row=4, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l5.grid(row=5, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        returnbutton.grid(row=6, column=0, columnspan=3,
-                          sticky=constants.EW, padx=50, pady=10)
-        self.pack()
+# infobutoon
 
     def _handle_begin_button_press(self):
         if not self._filepath:
@@ -236,20 +196,21 @@ class Begin:
                 self._file_strvar.set("Et valinnut tiedostoa")
             else:
                 self._file_strvar.set("No file selected")
-        if not self._tables_n:
+        if self._tables_n == 0:
             if self._language == "FI":
                 self._button_strvar.set("Et valinnut pöytien määrää")
             else:
                 self._button_strvar.set("No amount of tables selected")
         self.pack()
-        if self._filepath and self._tables_n:
-            try:
-                pla = Placement(
-                    self._tables_n, ParticipantsRepo(self._filepath))
-                wish_rate = (pla.wishes_placed / pla.total_wishes) * 100
-                self._placement_is_finished(self._current_user, pla.fin_placement, wish_rate, self._language)
-            except Exception as eror:
-                self.errors(eror)
+        if self._filepath and (self._tables_n > 0):
+            # try:
+            pla = Placement(
+                self._tables_n, ParticipantsRepo(self._filepath))
+            wish_rate = (pla.wishes_placed / pla.total_wishes) * 100
+            self._placement_is_finished(
+                self._current_user, pla.fin_placement, wish_rate, self._language)
+            # except Exception as eror:
+            #    self.errors(eror)
 
     def errors(self, errname):
         self.destroy()

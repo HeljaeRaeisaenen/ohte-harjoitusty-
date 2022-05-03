@@ -4,6 +4,8 @@ from ui.ui_firstview import First
 from ui.ui_begin_placement import Begin
 from ui.ui_finish_placement import Finished
 from ui.ui_logout import Logout
+from ui.ui_info import InfoView
+
 
 class UI:
     '''User interface.
@@ -35,18 +37,22 @@ class UI:
     def _show_first_view(self, user, language):
         self._destroy_current_view()
         self._current_view = First(
-            self._root, user, self._show_main_view, self.show_logout_view, language)
+            self._root, user, self._show_main_view, self._show_info_view, self._show_first_view, self.show_logout_view, language)
 
     def _show_main_view(self, user, language):
         self._destroy_current_view()
         self._current_user = user
         self._current_view = Begin(
-            self._root, user, self._show_finished_view, language)
+            self._root, user, self._show_info_view, self._show_main_view, self._show_finished_view, language)
 
     def _show_finished_view(self, user, file_to_write, wish_average, language):
         self._destroy_current_view()
         self._current_view = Finished(
             self._root, user, file_to_write, wish_average, self._show_main_view, self.show_logout_view, language)
+
+    def _show_info_view(self, return_view, user, language):
+        self._destroy_current_view()
+        self._current_view = InfoView(self._root, return_view, user, language)
 
     def show_logout_view(self, language):
         self._destroy_current_view()

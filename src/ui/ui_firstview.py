@@ -1,19 +1,21 @@
 '''View once user has logged in'''
 from tkinter import ttk, constants, StringVar
-from database_connection import get_database_connection
-from database_functions import Logging
+from file_and_database_functions.database_connection import get_db_connection
+from file_and_database_functions.database_functions import Logging
 
 
 class First:
     '''if login was succesful, show this view'''
 
-    def __init__(self, root, user, make_placement, log_out, language="FI"):
+    def __init__(self, root, user, make_placement, info_button, info_return_command, log_out, language="FI"):
         self._root = root
         self._current_view = None
         self._current_user = user
         self._language = language
         self._frame = None
         self._make_placement = make_placement
+        self._info_button = info_button
+        self._info_return = info_return_command
         self._log_out = log_out
 
         self._label_label = StringVar()
@@ -26,10 +28,6 @@ class First:
         self._used_var = StringVar()
         self._avg_var = StringVar()
 
-        self._labl_str = StringVar()
-        self._l2_str = StringVar()
-        self._l3_str = StringVar()
-        self._l5_str = StringVar()
         self._init_view()
 
     def pack(self):
@@ -98,19 +96,21 @@ class First:
         self._make_placement(self._current_user, self._language)
 
     def _handle_stats_button_press(self):
-        log = Logging(get_database_connection())
+        log = Logging(get_db_connection())
         stats = log.view_statistics(self._current_user)
         log.close_connection()
 
         self.destroy()
         if self._language == "FI":
             self._used_var.set(f"Olet tehnyt {stats[0]} plaseerausta.")
-            self._avg_var.set(
-                f"Keskimäärin {stats[1]}% osallistujien toiveista \n on toteutettu plaseerauksissa.")
+            if stats[0] != 0:
+                self._avg_var.set(
+                    f"Keskimäärin {stats[1]}% osallistujien toiveista \n on toteutettu plaseerauksissa.")
         if self._language == "EN":
             self._used_var.set(f"You have made {stats[0]} seating placements.")
-            self._avg_var.set(
-                f"On average, {stats[1]}% of the wishes of participants \nhave been filled in the placements.")
+            if stats[0] != 0:
+                self._avg_var.set(
+                    f"On average, {stats[1]}% of the wishes of participants \nhave been filled in the placements.")
 
         self._frame = ttk.Frame(master=self._root)
         label1 = ttk.Label(master=self._frame, textvariable=self._used_var)
@@ -120,14 +120,22 @@ class First:
             textvariable=self._back_str,
             command=self._init_view)
 
-        label1.grid(row=0, column=0, columnspan=2, sticky=constants.W, padx=200, pady=10)
-        label2.grid(row=2, column=0, columnspan=2, sticky=constants.W, padx=200, pady=10)
+        label1.grid(row=0, column=0, columnspan=2,
+                    sticky=constants.W, padx=200, pady=10)
+        label2.grid(row=2, column=0, columnspan=2,
+                    sticky=constants.W, padx=200, pady=10)
         backbutton.grid(row=3, column=0, columnspan=2, padx=200, pady=10)
         self.pack()
 
     def _handle_logout_button_press(self):
         self._log_out(self._language)
 
+    def _handle_info_button_press(self):
+        self._info_button(self._info_return,
+                          self._current_user, self._language)
+
+
+'''
     def _handle_info_button_press(self):
         self.destroy()
 
@@ -173,3 +181,4 @@ class First:
         returnbutton.grid(row=6, column=0, columnspan=3,
                           sticky=constants.EW, padx=50, pady=10)
         self.pack()
+'''

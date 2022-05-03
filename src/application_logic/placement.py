@@ -1,5 +1,5 @@
 '''class for creating the actual placement'''
-from participants_repo import ParticipantsRepo
+from application_logic.participants_repo import ParticipantsRepo
 
 
 class Placement:
@@ -201,7 +201,6 @@ class Placement:
 
 ###############################################################################################
 
-
     def _do_fin_placement(self):
         '''Start putting people in friendgroups in the fin_placement.'''
 
@@ -343,6 +342,10 @@ class Placement:
         Returns:
             Bool: true if succesful, else: False
         '''
+        if coordinates[1] == -1:
+            return False
+        if coordinates[1] == len(self.fin_placement[coordinates[0]]):
+            return False
         if self.fin_placement[coordinates[0]][coordinates[1]]:
             return False
 
@@ -356,7 +359,6 @@ class Placement:
 
 ###############################################################################################
 
-
     def _ensure_everyone_placed(self):
         '''Check if everyone is placed in the fin_placement.'''
         failstr = ""
@@ -366,8 +368,10 @@ class Placement:
         if len(failstr) > 0:
             raise Exception(failstr)
 
+
 class TablesException(Exception):
     '''A specific exception for class Placement'''
+
     def __init__(self):
         super().__init__()
         self.value = "There are more tables than people"

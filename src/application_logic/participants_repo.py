@@ -1,6 +1,6 @@
 '''A repository (maybe?) for handling the participants of the event'''
-from readwrite import fileread
-from participant import Participant
+from file_and_database_functions.readwrite import fileread
+from application_logic.participant import Participant
 
 
 class ParticipantsRepo:

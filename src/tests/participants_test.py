@@ -1,5 +1,5 @@
 import unittest
-from participants_repo import ParticipantsRepo
+from application_logic.participants_repo import ParticipantsRepo
 import os
 
 

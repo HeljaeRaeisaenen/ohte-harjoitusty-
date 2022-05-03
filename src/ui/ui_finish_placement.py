@@ -1,9 +1,9 @@
 '''View once the program has done its thing'''
 
 from tkinter import filedialog, ttk, constants, StringVar
-from readwrite import filewrite
-from database_functions import Logging
-from database_connection import get_database_connection
+from file_and_database_functions.readwrite import filewrite
+from file_and_database_functions.database_functions import Logging
+from file_and_database_functions.database_connection import get_db_connection
 
 
 class Finished:
@@ -41,7 +41,7 @@ class Finished:
         self._frame.destroy()
 
     def _save_stats(self):
-        log = Logging(get_database_connection())
+        log = Logging(get_db_connection())
         log.add_statistics(self._user, self._wish_rate)
         log.close_connection()
 

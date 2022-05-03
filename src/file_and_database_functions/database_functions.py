@@ -1,5 +1,5 @@
 '''Logging in and out'''
-from database_connection import get_database_connection, close_database_connection
+from file_and_database_functions.database_connection import get_db_connection, close_db_connection
 
 
 class Logging:
@@ -117,17 +117,17 @@ class Logging:
         cursor.execute(
             "select timesused, average_wish_rate from users where username=?", (username,))
         rows = cursor.fetchone()
-        if not rows:
+        if not rows[0]:
             return 0, 0
         return rows[0], rows[1]
 
     def close_connection(self):
         '''Close the database'''
-        close_database_connection(self._connection)
+        close_db_connection(self._connection)
 
 
 if __name__ == '__main__':
-    l = Logging(get_database_connection())
+    l = Logging(get_db_connection())
     #l.create_username("jakko", "pouta")
     l.find_username("jakko")
     print(l.verify_password("jaako", "pouta"))
