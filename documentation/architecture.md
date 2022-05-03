@@ -1,6 +1,12 @@
 
 ## Structure
 
+### Packaging structure
+Or pakkausrakenne, I'm not sure what these terms are in English.
+
+![packaging_structure](https://user-images.githubusercontent.com/94612974/166560603-d2c0b919-5ab0-4368-839c-7479ff890acf.png)
+
+#### Application logic
 ```mermaid
 classDiagram
   ParticipantsRepo-->Participant
@@ -11,6 +17,7 @@ classDiagram
     Participant: str name
     Participant: str first_name
     Participant: list wishes
+
     Participant: bool placed
     Participant: tuple seat_coordinates
     
@@ -39,13 +46,20 @@ classDiagram
 The user interface has three classes, and distinct views:
 
 - a login view,
-- a "Begin" view where the user can give the program a file and specifications,
-- and a "Finish" view, where the user can save the finished placement and log out.
+- "First view" which the user sees first, and from which they can access other views
+- an "Info view", where the user receives information
+- a "Begin placement" view where the user can give the program a file and specifications,
+- and a "Finish placement" view, where the user can save the finished placement and log out.
 
-A fourth class called UI controls the transitions between these. There is also an info view, which can be opened from the second, but this contains only some text and is a part of the same class. The class Begin also uses the application logic classes.
+A sixth class called UI controls the transitions between these. The class Begin in ui_begin_placement uses the application logic classes.
 
 ## Application logic
-The class Placement is responsible for the logical part of the program. It uses its attributes and methods to create a placement, following four steps:
+
+![logick](https://user-images.githubusercontent.com/94612974/166562289-a83cb828-1021-45ab-b08f-fa3a11120fa9.png)
+
+The class Placement is responsible for the logical part of the program, with the aid of Participant and ParticipantsRepo. ParticipantsRepo makes use of Participant, and Placement makes use of ParticipantsRepo. ParticipantsRepo uses a filereading function from the package readwrite to read the particiåants from a file, while turning the lines of the file into Participant-objects, with several useful attributes. The database classes and functions are only used from the UI.
+
+Placement creates a placement, following four steps:
 
 1. Initializing everything and making sure the user input is usable
 2. Grouping the participants of the event, or the names in the inputted file, together placed on their wishes
