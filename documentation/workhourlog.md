@@ -38,4 +38,8 @@
 3 hours of improving the UI and adding functionality to it
 2 hours of cleaning and testing code
 
-### Total hours: 48
+## Week 6
+4 hours of fixing bugs and making the code look neat
+2 hours of adding new functionality and changing the structure
+
+### Total hours: 54
