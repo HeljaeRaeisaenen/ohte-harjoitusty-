@@ -23,7 +23,7 @@ Please consider that the usernames and passwords are saved as plaintext, and tha
 
 ## Using the placement generator
 
-After you have succesfully logged in, the program asks you for a csv file. By clicking the button, you can select the desired file from your folders visually.
+After you have succesfully logged in, you can start creating the placement, view your placement-creating statistics, log out or look at some info. If you choose to make a placement, the program opens a new view and asks you for a csv file. By clicking the button, you can select the desired file from your folders visually.
 
 The file must have a very specific structure: 
 - It must be comma-separated (you can save Excel documents in this format by selecting 'csv' as the filetype, and 'comma' as the delimiter)
