@@ -1,6 +1,4 @@
-# Ohjelmistotekniikka Harjoitustyö
-
-## Seating Placement Generator
+# Seating Placement Generator
 The application creates seating arrangements for parties. The seating is influenced by the wishes of the participants. The program uses csv-files.
 
 ### Documentation
