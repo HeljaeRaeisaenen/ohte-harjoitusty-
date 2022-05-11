@@ -1,5 +1,6 @@
 '''Login view'''
 from tkinter import constants, ttk, StringVar
+import bcrypt
 from file_and_database_functions.database_functions import Logging
 from file_and_database_functions.database_connection import get_db_connection
 
@@ -138,8 +139,9 @@ class Login:
             self._init_view()
 
     def _handle_startbutton_press(self):
-        password_value = self._entry_pass.get()
-        username_value = self._entry_name.get()
+        password_value = str(self._entry_pass.get())
+        username_value = str(self._entry_name.get())
+
         if username_value == "":
             self.login_failure()
         else:

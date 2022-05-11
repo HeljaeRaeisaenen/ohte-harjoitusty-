@@ -15,6 +15,8 @@ class TestDatabase(unittest.TestCase):
             dirname, "..", "data", "test_database.sqlit"))
         connection.row_factory = sqlite3.Row
         self.l = Logging(connection)
+        self.l.clear_database()
+        self.l = Logging(connection)
 
     def test_name_not_saved(self):
         name = "Jaakko"
@@ -36,6 +38,7 @@ class TestDatabase(unittest.TestCase):
 
     def test_username_password(self):
         name = "AAAAA"
-        self.l.create_username(name, "123")
-        x = self.l.verify_password(name, "123")
+        passw = "123"
+        self.l.create_username(name, passw)
+        x = self.l.verify_password(name, passw)
         self.assertTrue(x)

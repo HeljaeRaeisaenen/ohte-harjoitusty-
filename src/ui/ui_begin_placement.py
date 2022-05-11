@@ -190,7 +190,6 @@ class Begin:
             else:
                 self._file_strvar.set(f"File selected: {filename}")
         self._init_view()
-# infobutoon
 
     def _handle_begin_button_press(self):
         if not self._filepath:

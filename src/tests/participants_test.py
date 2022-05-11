@@ -11,7 +11,7 @@ class TestParticipants(unittest.TestCase):
 
     def test_setup_from_file(self):
         self.assertEqual(len(self.f.get_participants()), 8)
-        self.assertEqual(len(self.f.return_has_wishes()), 8)
+        self.assertEqual(len(self.f.return_has_wishes()), 7)
 
     def test_return_full_name(self):
         name = "bananas"

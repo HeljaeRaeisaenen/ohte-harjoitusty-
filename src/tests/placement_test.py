@@ -33,7 +33,7 @@ class TestPlacement(unittest.TestCase):
         self.assertNotIn("Cherries -", x)
         self.assertNotIn("Horseradish -", x)
 
-    def test_create_friendgroup_odd_names(self):
+    def test_create_friendgroup_fail(self):
         filepath = os.path.join(os.path.dirname(
             __file__), "..", "data", "unittesting_additional.csv")
         self.p.repo.initialize(filepath)
@@ -44,7 +44,7 @@ class TestPlacement(unittest.TestCase):
              self.p.repo.participants["Peas -"].opposite()]
         while None in x:
             x.remove(None)
-        self.assertEqual(len(x), 2)
+        self.assertEqual(len(x), 0)
 
     def test_create_friendgroup_onewish(self):
         # self.setUp()

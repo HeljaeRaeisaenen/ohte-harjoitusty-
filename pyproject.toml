@@ -8,6 +8,7 @@ authors = ["HeljaeRaeisaenen <94612974+HeljaeRaeisaenen@users.noreply.github.com
 python = "^3.8"
 invoke = "^1.7.0"
 pytest = "^7.1.1"
+bcrypt = "^3.2.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"

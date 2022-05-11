@@ -16,6 +16,7 @@ class First:
         self._make_placement = make_placement
         self._info_button = info_button
         self._info_return = info_return_command
+        self._pass_entry = None
         self._log_out = log_out
 
         self._label_label = StringVar()
@@ -23,10 +24,15 @@ class First:
         self._info_var = StringVar()
         self._stats_var = StringVar()
         self._back_str = StringVar()
+        self._del_user_var = StringVar()
+        self._change_pwd_var = StringVar()
         self._logout_var = StringVar()
 
         self._used_var = StringVar()
         self._avg_var = StringVar()
+
+        self._new_pass_var = StringVar()
+        self._success_var = StringVar()
 
         self._init_view()
 
@@ -44,16 +50,26 @@ class First:
         self._info_var.set("Infoa – lue minut")
         self._begin_plac_label.set("Aloita plaseeraus")
         self._stats_var.set("Tarkastele tietojasi")
+        self._change_pwd_var.set("Vaihda salasana")
+        self._del_user_var.set("Poista käyttäjäsi ja sen tiedot")
         self._back_str.set("Takaisin")
         self._logout_var.set("Kirjaudu ulos")
+
+        self._new_pass_var.set("Kirjoita uusi salasana:")
+        self._success_var.set("Salasanan vaihto onnistui")
 
     def _init_strvars_en(self):
         self._label_label.set(f"Welcome {self._current_user}")
         self._info_var.set("Info – read me")
         self._begin_plac_label.set("Begin placement")
         self._stats_var.set("View your information")
+        self._change_pwd_var.set("Change your password")
+        self._del_user_var.set("Delete user and its data")
         self._back_str.set("Back")
         self._logout_var.set("Logout")
+
+        self._new_pass_var.set("Write a new password:")
+        self._success_var.set("Password change succesful")
 
     def _init_view(self):
         self.destroy()
@@ -80,6 +96,14 @@ class First:
             master=self._frame,
             textvariable=self._logout_var,
             command=self._handle_logout_button_press)
+        passbutton = ttk.Button(
+            master=self._frame,
+            textvariable=self._change_pwd_var,
+            command=self._handle_pass_button_press)
+        delbutton = ttk.Button(
+            master=self._frame,
+            textvariable=self._del_user_var,
+            command=self._handle_del_button_press)
 
         self._frame.grid_columnconfigure(1, weight=1, minsize=400)
         label.grid(row=0, column=0, columnspan=3,
@@ -88,7 +112,14 @@ class First:
         start_plac_button.grid(
             row=2, column=0, columnspan=2, padx=200, pady=10)
         statbutton.grid(row=4, column=0, columnspan=2, padx=200, pady=10)
-        logoutbutton.grid(row=5, column=0, columnspan=2, padx=200, pady=10)
+        passbutton.grid(row=5, column=0, columnspan=2, padx=200, pady=10)
+        if self._pass_entry:
+            succlabel = ttk.Label(
+                master=self._frame, textvariable=self._success_var, foreground="blue")
+            succlabel.grid(row=6, column=0, columnspan=2, padx=200, pady=10)
+
+        delbutton.grid(row=8, column=0, columnspan=2, padx=200, pady=10)
+        logoutbutton.grid(row=9, column=0, columnspan=2, padx=200, pady=10)
 
         self.pack()
 
@@ -127,58 +158,39 @@ class First:
         backbutton.grid(row=3, column=0, columnspan=2, padx=200, pady=10)
         self.pack()
 
+    def _handle_pass_button_press(self):
+        self.destroy()
+
+        self._frame = ttk.Frame(master=self._root)
+        pass_change = ttk.Label(
+            master=self._frame, textvariable=self._new_pass_var)
+        self._pass_entry = ttk.Entry(master=self._frame)
+        donebutton = ttk.Button(
+            master=self._frame,
+            text="OK",
+            command=self._change_pass)
+
+        pass_change.grid(row=0, column=0, columnspan=2,
+                         sticky=constants.W, padx=200, pady=10)
+        self._pass_entry.grid(row=2, column=0, columnspan=2,
+                              sticky=constants.W, padx=200, pady=10)
+        donebutton.grid(row=3, column=0, columnspan=2, padx=200, pady=10)
+        self.pack()
+
+    def _change_pass(self):
+        log = Logging(get_db_connection())
+        log.change_password(self._current_user, str(self._pass_entry.get()))
+
+        self._init_view()
+
+    def _handle_del_button_press(self):
+        log = Logging(get_db_connection())
+        log.delete_user(self._current_user)
+        self._log_out()
+
     def _handle_logout_button_press(self):
         self._log_out()
 
     def _handle_info_button_press(self):
         self._info_button(self._info_return,
                           self._current_user, self._language)
-
-
-'''
-    def _handle_info_button_press(self):
-        self.destroy()
-
-        if self._language == "FI":
-            self._labl_str.set(
-                "Csv-tiedostossa tulee olla vain 2 saraketta, joista ensimmäisessä")
-            self._l2_str.set(
-                "tulee olla osallistujien nimet (Etunimi Sukunimi), ja toisessa toivotut")
-            self._l3_str.set("seuralaiset pilkulla eroteltuna.")
-            self._l5_str.set(
-                "Tiedoston solujen erottimena tulle olla pilkku (,).")
-        else:
-            self._labl_str.set(
-                "The csv file can only have 2 columns, of which the first must have")
-            self._l2_str.set(
-                "the names of the participants (Firstname Lastname), and the other")
-            self._l3_str.set("the wished company, separated by commas.")
-            self._l5_str.set("The delimiter of the filemust be a comma (,).")
-
-        self._frame = ttk.Frame(master=self._root)
-        label = ttk.Label(
-            master=self._frame, textvariable=self._labl_str)
-        l2 = ttk.Label(
-            master=self._frame, textvariable=self._l2_str)
-        l3 = ttk.Label(master=self._frame, textvariable=self._l3_str)
-        l4 = ttk.Label(master=self._frame, text="                ")
-        l5 = ttk.Label(
-            master=self._frame, textvariable=self._l5_str)
-        returnbutton = ttk.Button(
-            master=self._frame,
-            textvariable=self._back_str,
-            command=self._init_view)
-        label.grid(row=0, column=0, columnspan=3,
-                   sticky=constants.EW, padx=50, pady=10)
-        l2.grid(row=1, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l3.grid(row=3, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l4.grid(row=4, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        l5.grid(row=5, column=0, columnspan=3,
-                sticky=constants.EW, padx=50, pady=10)
-        returnbutton.grid(row=6, column=0, columnspan=3,
-                          sticky=constants.EW, padx=50, pady=10)
-        self.pack()
-'''
