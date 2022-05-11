@@ -42,4 +42,8 @@
 4 hours of fixing bugs and making the code look neat
 2 hours of adding new functionality and changing the structure
 
-### Total hours: 54
+## Week 7
+4 hours of adding functionality and tidying code
+1 hour of making the unit tests work
+
+### Total hours: 59

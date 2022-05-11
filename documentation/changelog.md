@@ -21,3 +21,8 @@
 ### Week 6
 - added user statistics and ability to view them
 - changed folder structure
+
+### Week 7
+- used bcrypt-library to encrypt passwords
+- added the ability to change password or delete user
+- fine-tuned the program logic

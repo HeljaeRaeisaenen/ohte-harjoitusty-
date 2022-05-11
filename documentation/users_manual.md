@@ -15,15 +15,23 @@ The program requires the user to log in. This can be done by writing login crede
 
 You can also toggle the interface language between Finnish and English by clicking the button in the upper right corner.
 
-If you don't have an username, write your desired username in the field. An user will be automatically created.
+If you don't have an username, write your desired username in the field. An user will be automatically created. You can change your password later if you do remember your old password.
 
-If you forget your password, there's nothing you can do, but create a new user. You can, however, leace the password field blank.
+If you forget your password, there's nothing you can do but create a new user. You can, however, leave the password field blank.
 
-Please consider that the usernames and passwords are saved as plaintext, and that to ensure your safety, _you should not use an username or a password that you use in any other service_.
+Please consider that the encryption used on the passwords is probably weak and that I'm not a cryptographer, and that to ensure your safety, _you should not use an username or a password that you use in any other service_.
 
 ## Using the placement generator
 
-After you have succesfully logged in, you can start creating the placement, view your placement-creating statistics, log out or look at some info. If you choose to make a placement, the program opens a new view and asks you for a csv file. By clicking the button, you can select the desired file from your folders visually.
+After you have succesfully logged in, you can 
+- start creating the placement,
+- view your placement-creating statistics,
+- change your password,
+- delete your data, 
+- look at some info, or
+- log out.
+
+If you choose to make a placement, the program opens a new view and asks you for a csv file. By clicking the button, you can select the desired file from your folders visually.
 
 The file must have a very specific structure: 
 - It must be comma-separated (you can save Excel documents in this format by selecting 'csv' as the filetype, and 'comma' as the delimiter)
