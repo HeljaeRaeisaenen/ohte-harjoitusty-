@@ -8,9 +8,9 @@ The purpose of this application is to help create a seating placement ('plaseera
 
 ## Users
 
-The application requires the user to log in. The user can create a username. The username can have a password, or be unprotected. The password won't be stored securely. There are no different user groups.
+The application requires the user to log in. The user can create a username. The username can have a password, or be unprotected. The password won't be stored very securely. There are no different user groups. The user can change their password and delete their user and data.
 
-*Done: the ability to log in*
+*Done.*
 
 ## Outline for the user interface
 
