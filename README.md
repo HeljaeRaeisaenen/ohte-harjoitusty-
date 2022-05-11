@@ -24,6 +24,10 @@ To have it work properly, you must have poetry installed:
 
 `poetry install`
 
+And you must also install the library `bcrypt`:
+
+`poetry add bcrypt`
+
 To run the program, type:
 
 `poetry run invoke start`
