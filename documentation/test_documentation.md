@@ -7,9 +7,7 @@ The application logic classes Participant and Placement have their own test file
 
 The coverage of the unit tests is 85%.
 
-![image](https://user-images.githubusercontent.com/94612974/167601783-44f5a88b-d8ac-4516-b8ef-2f2574be8655.png)
-
-
+![image](https://user-images.githubusercontent.com/94612974/167952325-5da0cece-9195-4805-bbb8-1570df2f0f1a.png)
 
 
 ## Manual testing
