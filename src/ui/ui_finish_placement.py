@@ -102,7 +102,7 @@ class Finished:
             self.pack()
 
     def _handle_logout_button_press(self):
-        self._finish_logout(self._languge)
+        self._finish_logout()
 
     def _handle_new_button_press(self):
         self._new_placement(self._user, self._languge)

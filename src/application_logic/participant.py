@@ -81,7 +81,7 @@ class Participant:
         elif (not self._place_opposite) and (not friend.opposite()):
             self._place_opposite = friend.name
             friend.set_opposite(self.name)
-#            self.surrounded = True
         else:
-            return
+            return False
         self.place()
+        return True

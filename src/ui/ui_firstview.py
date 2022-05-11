@@ -128,7 +128,7 @@ class First:
         self.pack()
 
     def _handle_logout_button_press(self):
-        self._log_out(self._language)
+        self._log_out()
 
     def _handle_info_button_press(self):
         self._info_button(self._info_return,

@@ -104,10 +104,9 @@ class Login:
         pass_label = ttk.Label(
             master=self._frame, textvariable=self._pass_label)
         self._entry_name = ttk.Entry(master=self._frame)
-        self._entry_pass = ttk.Entry(master=self._frame)
+        self._entry_pass = ttk.Entry(master=self._frame, show="*")
 
         self._frame.grid_columnconfigure(0, weight=1, minsize=200)
-        #self._frame.grid_columnconfigure(1, weight=1, minsize=200)
         self._frame.grid(columnspan=2)
         langbutton.grid(row=0, column=0,
                         sticky=constants.E, padx=10, pady=10)

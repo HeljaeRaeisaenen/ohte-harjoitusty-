@@ -2,10 +2,10 @@ import sqlite3
 import os
 from pathlib import Path
 import unittest
-from database.database_functions import Logging
+from file_and_database_functions.database_functions import Logging
 
 
-class TestParticipants(unittest.TestCase):
+class TestDatabase(unittest.TestCase):
     def setUp(self):
         dirname = os.path.dirname(__file__)
 
@@ -31,8 +31,8 @@ class TestParticipants(unittest.TestCase):
         name = "AAAAA"
         self.l.create_username(name, "123")
         x = self.l.view_statistics(name)
-        self.assertIsNone(x[0])
-        self.assertIsNone(x[1])
+        self.assertEqual(x[0], 0)
+        self.assertEqual(x[1], 0)
 
     def test_username_password(self):
         name = "AAAAA"

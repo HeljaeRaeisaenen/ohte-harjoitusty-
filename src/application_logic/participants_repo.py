@@ -24,12 +24,15 @@ class ParticipantsRepo:
         for i in output:
             # give the name to the init.
             self.participants[i[0]] = Participant(i[0])
+            self._odd_wishes[i[0]] = []
         for i in output:
             for name in i[1]:
-                # print(name)
                 friend = self.is_in_participants(name)
                 if friend:
                     self.participants[i[0]].wishes.append(friend)
+                else:
+                    self._odd_wishes[i[0]].append(name)
+        self._handle_odd_names()
 
     def get_participants(self):
         '''Returns a dictionary of the participants. Key: name, value: Participant-object.'''
@@ -55,7 +58,18 @@ class ParticipantsRepo:
         return False
 
     def _handle_odd_names(self):
-        pass
+        for name, wishes in self._odd_wishes.items():
+            for wish in wishes:
+                if wish == "":
+                    continue
+                for name2, wishes2 in self._odd_wishes.items():
+                    for wish2 in wishes2:
+                        if wish2 == "":
+                            continue
+                        if wish == wish2 and (not name in self.participants[name2].wishes):
+                            if name != name2:
+                                self.participants[name].wishes.append(name2)
+                                self.participants[name2].wishes.append(name)
 
     def return_full_name(self, name: str):
         '''If only first name is known, return full name. If full name is put in as an argument,
@@ -83,7 +97,7 @@ class ParticipantsRepo:
         '''Returns a list containing all names (keys to self.participants) that don't have a
         friendgroup.
         '''
-        output = []  # use sets instead?
+        output = []
         for person, obj in self.participants.items():
             if not obj.is_placed():
                 output.append(person)
@@ -92,7 +106,7 @@ class ParticipantsRepo:
     def return_not_placed_fin(self):
         '''Returns a list containing all names (keys to self.participants) that haven't been
         placed in the final seating'''
-        output = []  # use sets instead?
+        output = []
         for person in self.participants:
             if not person in self.placed_fin:
                 output.append(person)

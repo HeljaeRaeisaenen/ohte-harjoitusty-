@@ -64,11 +64,9 @@ class Placement:
         has_wishes = self.repo.return_has_wishes()
         for person in has_wishes:
             self.create_friendgroup(person)
-        self._combine_friendgroups()
+        self._add_to_friendgroups()
         self._do_fin_placement()
         self._ensure_everyone_placed()
-
-###################################################################################################
 
     def create_friendgroup(self, name):
         '''This makes the initial building blocks of the placement: clusters of friends.
@@ -123,8 +121,6 @@ class Placement:
                     break
             table_row = self.tables_n * 2
 
-###################################################################################################
-
     def _add_friend_ok(self, name: str):
         '''Check if it's possible to add a friend to a cluster.
             Args: name, string. It should be sure that this name is in the participants.
@@ -158,31 +154,24 @@ class Placement:
             Returns: None'''
         participants = self.repo.get_participants()
         for friend in cluster:
-            participants[name].update_friendgroup(friend)
-            friend.place()
-            self.repo.add_has_friendgroup(friend.name)
+            success = participants[name].update_friendgroup(friend)
+            if success:
+                friend.place()
+                self.repo.add_has_friendgroup(friend.name)
         self.repo.add_has_friendgroup(name)
 
-    def _combine_friendgroups(self):
+    def _add_to_friendgroups(self):
         '''Iterate throupgh the names who have a friendgroup, and see if you can add more friends
         in them.
         '''
         participants = self.repo.get_participants()
         has_friendgroup = self.repo.get_has_friendgroup()
 
-        for person in has_friendgroup:
-            for wish in participants[person].wishes:
-                # both are never true at the same time
-                if wish in has_friendgroup and not self.repo.check_if_placed(wish):
-                    participants[person].update_friendgroup(
-                        participants[wish])
-                    participants[wish].place()
         for person in self.repo.return_not_placed():
             for wish in participants[person].wishes:
                 if wish and (wish in has_friendgroup):
                     participants[person].update_friendgroup(
                         participants[wish])
-                    participants[wish].place()
 
     def _friend_row(self, name):
         '''Make a list from the seating info in the Particpant objects. The list is like a
@@ -197,9 +186,6 @@ class Placement:
             name = self.repo.participants[name].on_the_right()
 
         return output
-
-
-###############################################################################################
 
     def _do_fin_placement(self):
         '''Start putting people in friendgroups in the fin_placement.'''
@@ -257,7 +243,6 @@ class Placement:
         else:
             opposite_row = row + 1
         for place in self.fin_placement[row]:
-            # print(place)
             if place:
                 indx = self.fin_placement[row].index(place)
                 new = self.repo.participants[place].opposite()
@@ -272,16 +257,14 @@ class Placement:
             placed: a person already in fin_placement
             friend: a person who has wished to be placed next to 'placed'
         '''
-        #friend = self.repo.return_full_name(friend)
         if placed not in self.repo.placed_fin:
             return
 
         coords = self.repo.participants[placed].seat_coords
         friend_coords = None
-        opposite = 0
-        if not coords:  # idk why there's sometimes None coords, coords are always added when person
-            # is added to fin placement
-            return
+        opposite = None
+        if not coords:
+            raise Exception("no coordinates")
         if coords[0] % 2 == 1:
             opposite = coords[0] - 1
         else:
@@ -355,9 +338,6 @@ class Placement:
         self.repo.participants[name].seat_coords = coordinates
 
         return True
-
-
-###############################################################################################
 
     def _ensure_everyone_placed(self):
         '''Check if everyone is placed in the fin_placement.'''

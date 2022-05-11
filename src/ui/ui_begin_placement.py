@@ -162,6 +162,8 @@ class Begin:
 
     def _handle_tables_button_press(self):
         self._tables_n = askinteger("Input", "Input an Integer")
+        if not self._tables_n:
+            self._tables_n = 0
         if self._language == "FI":
             self._button_strvar.set(f"Pöytien määrä valittu: {self._tables_n}")
         else:
@@ -203,14 +205,14 @@ class Begin:
                 self._button_strvar.set("No amount of tables selected")
         self.pack()
         if self._filepath and (self._tables_n > 0):
-            # try:
-            pla = Placement(
-                self._tables_n, ParticipantsRepo(self._filepath))
-            wish_rate = (pla.wishes_placed / pla.total_wishes) * 100
-            self._placement_is_finished(
-                self._current_user, pla.fin_placement, wish_rate, self._language)
-            # except Exception as eror:
-            #    self.errors(eror)
+            try:
+                pla = Placement(
+                    self._tables_n, ParticipantsRepo(self._filepath))
+                wish_rate = (pla.wishes_placed / pla.total_wishes) * 100
+                self._placement_is_finished(
+                    self._current_user, pla.fin_placement, wish_rate, self._language)
+            except Exception as eror:
+                self.errors(eror)
 
     def errors(self, errname):
         self.destroy()
