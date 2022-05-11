@@ -76,7 +76,6 @@ class Logging:
         cursor.execute(
             "select password from users where username=?", (username,))
         rows = cursor.fetchone()
-        print(rows[0])
 
         if bcrypt.checkpw(password.encode('utf-8'), rows[0]):
             return True
