@@ -39,10 +39,14 @@
 
 2 hours of cleaning and testing code
 
+**Total of 5 hours**
+
 ## Week 6
 4 hours of fixing bugs and making the code look neat
 
 2 hours of adding new functionality and changing the structure
+
+**Total of 6 hours**
 
 ## Week 7
 4 hours of adding functionality and tidying code
