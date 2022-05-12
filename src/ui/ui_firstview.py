@@ -69,7 +69,7 @@ class First:
         self._logout_var.set("Logout")
 
         self._new_pass_var.set("Write a new password:")
-        self._success_var.set("Password change succesful")
+        self._success_var.set("Password change successful")
 
     def _init_view(self):
         self.destroy()
@@ -133,12 +133,18 @@ class First:
 
         self.destroy()
         if self._language == "FI":
-            self._used_var.set(f"Olet tehnyt {stats[0]} plaseerausta.")
+            if stats[0] == 1:
+                self._used_var.set(f"Olet tehnyt {stats[0]} plaseerauksen.")
+            else:
+                self._used_var.set(f"Olet tehnyt {stats[0]} plaseerausta.")
             if stats[0] != 0:
                 self._avg_var.set(
                     f"Keskimäärin {stats[1]}% osallistujien toiveista \n on toteutettu plaseerauksissa.")
         if self._language == "EN":
-            self._used_var.set(f"You have made {stats[0]} seating placements.")
+            if stats[0] == 1:
+                self._used_var.set(f"You have made {stats[0]} seating placement.")
+            else:
+                self._used_var.set(f"You have made {stats[0]} seating placements.")
             if stats[0] != 0:
                 self._avg_var.set(
                     f"On average, {stats[1]}% of the wishes of participants \nhave been filled in the placements.")
@@ -164,7 +170,7 @@ class First:
         self._frame = ttk.Frame(master=self._root)
         pass_change = ttk.Label(
             master=self._frame, textvariable=self._new_pass_var)
-        self._pass_entry = ttk.Entry(master=self._frame)
+        self._pass_entry = ttk.Entry(master=self._frame, show="*")
         donebutton = ttk.Button(
             master=self._frame,
             text="OK",
