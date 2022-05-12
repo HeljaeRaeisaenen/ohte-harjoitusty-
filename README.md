@@ -34,7 +34,7 @@ in the directory where the program is.
 
 ### Important
 
-To use the program, you need a csv file with any number of rows but exactly 2 columns, with the first column containing names (Firstname Lastname), and the second, the names of the wished company, preferably separated by a comma. The file must use a comma as the delimiter. It's assumed that the first row contains headers, and will be ignored. In the src/data folder, there are some files you can test the program on. All the files have been created just for testing purposes, and some of them are purposefully 'wrong' (extra columns etc.).
+To use the program, you need a very specific csv file. It can have any number of rows but exactly 2 columns, with the first column containing names (Firstname Lastname), and the second, the names of the wished company, preferably separated by a comma. The file must use a comma as the delimiter. It's assumed that the first row contains headers, and will be ignored. In the src/data folder, there are some files you can test the program on. All the files have been created just for testing purposes, and some of them are purposefully 'wrong' (extra columns etc.).
 
 ### Commands
 - To run unit tests for the program:
