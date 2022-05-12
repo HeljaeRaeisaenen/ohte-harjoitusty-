@@ -106,7 +106,7 @@ sequenceDiagram
   P->>L: create_username(username, password)
   L-->>P: ok
   deactivate L
-  P-->>U: you can enter
+  P-->>U: "you can enter"
   ```
   This happpens if the username doesn't exist. A new user is automatically created.
   
