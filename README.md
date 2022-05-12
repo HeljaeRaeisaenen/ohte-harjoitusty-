@@ -2,6 +2,7 @@
 The application creates seating arrangements for parties. The seating is influenced by the wishes of the participants. The program uses csv-files.
 
 ### Documentation
+[User manual](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/users_manual.md)
 
 [Requirements specification](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/requirements_spec.md)
 
@@ -10,6 +11,8 @@ The application creates seating arrangements for parties. The seating is influen
 [Work hour log](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/workhourlog.md)
 
 [Changelog](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/changelog.md)
+
+[Test documentation](https://github.com/HeljaeRaeisaenen/ohte-harjoitusty-/blob/main/documentation/test_documentation.md)
 
 
 ## Releases
