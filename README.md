@@ -22,7 +22,7 @@ The application creates seating arrangements for parties. The seating is influen
 ## Installing and terminal commands
 The program can be installed from the previous section titled Release. 
 
-To have it work properly, you must have poetry installed:
+To have it work properly, you must have poetry installed in the program folder:
 
 `poetry install`
 
