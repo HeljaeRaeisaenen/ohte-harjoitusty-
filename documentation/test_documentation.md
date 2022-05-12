@@ -5,7 +5,7 @@ The application has been tested both with unit tests and manually via the user i
 ## Automated testing
 The application logic classes Participant and Placement have their own test files containing unit tests. These are in the _tests_-directory within the source directory. The ParticipantsRepo-class is tested by testing the Placement class: the functionality of these two is so intertwined, that Placement can't be used without ParticipantsRepo, and testing both of them together is intuitive. The database_functions-module is tested within its own test file.
 
-The coverage of the unit tests is 85%.
+The coverage of the unit tests is 84%.
 
 ![image](https://user-images.githubusercontent.com/94612974/167952325-5da0cece-9195-4805-bbb8-1570df2f0f1a.png)
 
